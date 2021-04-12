@@ -60,7 +60,7 @@ lumiereRouge(idBadgeuse) =
 
 detectionPassage(idBadgeuse) = 
     in(<|detectionPassage, string, ?idBadgeuse, int, ?idCarte, int, ?typeBadgeuse, string|>).
-    add(<|capteurPassage, string, !detection, int|>).
+    add(<|capteurPassage, string,idBadgeuse, int !detection, int|>).
     //Attend la detection pendant 30 sec
     (
         [detection > 1] 
@@ -87,8 +87,7 @@ detectionPassage(idBadgeuse) =
     )
 
 
-******************************************
-declancheAlarme(idBadgeuse, typeBadgeuse) = 
+******************************************declancheAlarme(idBadgeuse, typeBadgeuse) = 
     in(<|declencheAlarme, string, idBadgeuse, int|>)
     // code alarme
 
