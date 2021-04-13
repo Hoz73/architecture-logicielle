@@ -1,0 +1,76 @@
+{
+    "batiments" :
+        [
+            {
+                "name": "8A", 
+                "informations" : {
+                    "badgeuses" : 
+                    [
+                        {"name": "est"   , "entree" : 11, "sortie" : 12, "batiment": true},
+                        {"name": "ouest" , "entree" : 13, "sortie" : 14, "batiment": true},
+                        {"name" : "8A-42", "entree" : 11, "sortie" : 12, "batiment": false},
+                        {"name" : "8A-43", "entree" : 13, "sortie" : 14, "batiment": false},
+                        {"name" : "8A-44", "entree" : 15, "sortie" : 16, "batiment": false},
+                        {"name" : "8A-45", "entree" : 17, "sortie" : 18, "batiment": false}
+                    ],
+                    "carte":
+                    [
+                        {"id" : 1, "autorise":true},
+                        {"id" : 2, "autorise":true},
+                        {"id" : 3, "autorise":true},
+                        {"id" : 4, "autorise":false},
+                        {"id" : 5, "autorise":false},
+                        {"id" : 6, "autorise":false}
+                    ]
+                }
+            },
+            {
+                "name" : "4A",
+                "informations" : {
+                    "badgeuses" : 
+                    [
+                        {"name" : "4A-42", "entree" : 21, "sortie" : 22, "batiment": false},
+                        {"name" : "4A-43", "entree" : 23, "sortie" : 24, "batiment": false},
+                        {"name" : "A4-44", "entree" : 25, "sortie" : 26, "batiment": false},
+                        {"name" : "A4-45", "entree" : 27, "sortie" : 28, "batiment": false},
+                        {"name" : "nord",  "entree" : 21, "sortie" : 22, "batiment": true},
+                        {"name" : "sud" ,  "entree" : 23, "sortie" : 24, "batiment": true}
+                    ],
+                    "carte":
+                    [
+                        {"id" : 1, "autorise":true},
+                        {"id" : 2, "autorise":false},
+                        {"id" : 3, "autorise":false},
+                        {"id" : 4, "autorise":true},
+                        {"id" : 5, "autorise":true},
+                        {"id" : 6, "autorise":false}
+                    ]
+                }
+            },
+
+            {
+                "name":"10B",
+                "informations":
+                {
+                    "badgeuses" : 
+                    [
+                        {"name" : "10B-42", "entree" : 31, "sortie" : 32, "batiment": false},
+                        {"name" : "10B-43", "entree" : 33, "sortie" : 34, "batiment": false},
+                        {"name" : "10B-44", "entree" : 35, "sortie" : 36, "batiment": false},
+                        {"name" : "10B-45", "entree" : 37, "sortie" : 38, "batiment": false},
+                        {"name" : "sud" ,   "entree" : 31, "sortie" : 32, "batiment": true},
+                        {"name" : "nord",   "entree" : 33, "sortie" : 34, "batiment": true}
+                    ],
+                    "carte":
+                    [
+                        {"id" : 1, "autorise":true},
+                        {"id" : 2, "autorise":false},
+                        {"id" : 3, "autorise":false},
+                        {"id" : 4, "autorise":false},
+                        {"id" : 5, "autorise":false},
+                        {"id" : 6, "autorise":false}
+                    ]
+                }
+            }            
+        ]     
+}

@@ -3,43 +3,89 @@ from threading import Thread, Event
 from time import sleep
 import math
 
-batiments = ["1","2","3"]
+data = {
+    "batiments" :
+        [
+            {
+                "name": "8A", 
+                "informations" : {
+                    "badgeuses" : 
+                    [
+                        {"name": "est"   , "entree" : 11, "sortie" : 12, "batiment": True},
+                        {"name": "ouest" , "entree" : 13, "sortie" : 14, "batiment": True},
+                        {"name" : "8A-42", "entree" : 11, "sortie" : 12, "batiment": False},
+                        {"name" : "8A-43", "entree" : 13, "sortie" : 14, "batiment": False},
+                        {"name" : "8A-44", "entree" : 15, "sortie" : 16, "batiment": False},
+                        {"name" : "8A-45", "entree" : 17, "sortie" : 18, "batiment": False},
+                    ],
+                    "carte":
+                    [
+                        {"id" : 1, "autorise":True},
+                        {"id" : 2, "autorise":True},
+                        {"id" : 3, "autorise":True},
+                        {"id" : 4, "autorise":False},
+                        {"id" : 5, "autorise":False},
+                        {"id" : 6, "autorise":False}
+                    ]
+                },
+            },
+            {
+                "name" : "4A",
+                "informations" : {
+                    "badgeuses" : 
+                    [
+                        {"name" : "4A-42", "entree" : 21, "sortie" : 22, "batiment": False},
+                        {"name" : "4A-43", "entree" : 23, "sortie" : 24, "batiment": False},
+                        {"name" : "A4-44", "entree" : 25, "sortie" : 26, "batiment": False},
+                        {"name" : "A4-45", "entree" : 27, "sortie" : 28, "batiment": False},
+                        {"name" : "nord",  "entree" : 21, "sortie" : 22, "batiment": True},
+                        {"name" : "sud" ,  "entree" : 23, "sortie" : 24, "batiment": True}
+                    ],
+                    "carte":
+                    [
+                        {"id" : 1, "autorise":True},
+                        {"id" : 2, "autorise":False},
+                        {"id" : 3, "autorise":False},
+                        {"id" : 4, "autorise":True},
+                        {"id" : 5, "autorise":True},
+                        {"id" : 6, "autorise":False},
+                    ]
+                }
+            },
 
-salles = ["info", "reseau", "geo", "math"]
+            {
+                "name":"10B",
+                "informations":
+                {
+                    "badgeuses" : 
+                    [
+                        {"name" : "10B-42", "entree" : 31, "sortie" : 32, "batiment": False},
+                        {"name" : "10B-43", "entree" : 33, "sortie" : 34, "batiment": False},
+                        {"name" : "10B-44", "entree" : 35, "sortie" : 36, "batiment": False},
+                        {"name" : "10B-45", "entree" : 37, "sortie" : 38, "batiment": False},
+                        {"name" : "sud" ,   "entree" : 31, "sortie" : 32, "batiment": True},
+                        {"name" : "nord",   "entree" : 33, "sortie" : 34, "batiment": True}
+                    ],
+                    "carte":
+                    [
+                        {"id" : 1, "autorise":True},
+                        {"id" : 2, "autorise":False},
+                        {"id" : 3, "autorise":False},
+                        {"id" : 4, "autorise":False},
+                        {"id" : 5, "autorise":False},
+                        {"id" : 6, "autorise":False}
+                    ]
+                }
+            }            
+        ]     
+}
 
-badgeuses = [
-    [11, 12, 13, 14],
-    [21,22,23,24],
-    [31,32,33,34],
-    [41,42,43,44]
-]
+delai = 15
 
-batiments_badgeuses = [
-    [batiments[0],badgeuses[0][0],badgeuses[0][1],badgeuses[0][2],badgeuses[0][3]],
-    [batiments[1],badgeuses[1][0],badgeuses[1][1],badgeuses[1][2],badgeuses[1][3]],
-    [batiments[2],badgeuses[2][0],badgeuses[2][1],badgeuses[2][2],badgeuses[2][3]]
-]
+tabAgent = list()
 
-salles_badgeuses = [
-    [salles[0],badgeuses[0][0],badgeuses[0][1]],
-    [salles[1],badgeuses[1][0],badgeuses[1][1]],
-    [salles[2],badgeuses[2][0],badgeuses[2][1]],
-    [salles[3],badgeuses[3][0],badgeuses[3][1]]
-]
 
 cartes = [0,1,2]
-
-carte_Batiments = [
-    (cartes[0],batiments[0],batiments[1],batiments[2]),
-    (cartes[1],batiments[0]),
-    (cartes[2],batiments[0],batiments[0]),
-]
-
-carte_Salles = [
-    (cartes[0],salles[0],salles[1],salles[2],salles[3]),
-    (cartes[0],salles[0],salles[1],),
-    (cartes[0],salles[0],salles[1],salles[2])
-]
 
 class bcolors:
     OK = '\033[92m' #GREEN
@@ -48,7 +94,6 @@ class bcolors:
     RESET = '\033[0m' #RESET COLOR
 
 class espaceDeTuples():
-
     def OUT(self,element):
         self.listeTuples.append(element)
 
@@ -171,7 +216,8 @@ def scanCarte(ts, idBadgeuse, typeBadgeuse):
 def lumiereVerte(ts, idBadgeuse):
     ts.IN(("lumiereVerte", idBadgeuse),[])
     print(bcolors.OK + "Accès autorisée" + bcolors.RESET)
-    sec = 10
+    delai
+    sec = delai
     while(sec > 0):
         sleep(1)
         print(bcolors.WARNING + str(sec - 1) + " temps restant pour passer la porte " + bcolors.RESET)
@@ -186,36 +232,23 @@ def lumiereRouge(ts, idBadgeuse):
 
 #*******************************************************************
 
-# def detectionPersonne(ts,tsPersonne, idBadgeuse):
-#     global nbPersonne
-#     while(True):
-#         ts.IN(("capteurPassage", idBadgeuse),[])
-#         tsPersonne.OUT(())
-#         nbPersonne+=1
-        
-#         print("passage " + str(nbPersonne))
-
-#*******************************************************************
 def detectionPassage(ts, tsPersonne, idBadgeuse):
     res = ts.IN(("detectionPassage", idBadgeuse, -1, ""),[2,3])
     idCarte = res[0]
     typeBadgeuse = res[1]
-    delai = 10
+    delai
+    sec = delai
     nbPersonne = 0
-    #processDetection = Thread(target=detectionPersonne, args=(ts, idBadgeuse), daemon=True)
-    # processDetection.start()
-    
-    while (delai > 0):
-        if((delai % 4) == 0):
-            print("delai : hoey "+ str(delai))
+    while (sec > 0):
+        if((sec % 4) == 0):
+            print("sec : hoey "+ str(sec))
             ts.OUT(("capteurPassage", idBadgeuse))
         sleep(1)
         passage = ts.INUNBLOCKED(("capteurPassage", idBadgeuse),[])
         if(not None == passage):
             nbPersonnes = ts.RD(("nbPersonnesPassees", idBadgeuse, -1),[2])[0]
             ts.ADD(("nbPersonnesPassees", idBadgeuse, nbPersonnes+1),[2])
-        delai -=1
-    # processDetection.join(0.0)
+        sec -=1
     nbPersonnesPassees = ts.RD(("nbPersonnesPassees", idBadgeuse, -1),[2])[0]
     if nbPersonnesPassees > 1:
         print("if")
@@ -230,13 +263,10 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
         else:
             print("badgeuse sortie")
             tsPersonne.IN(("personnePresente", idCarte, idBadgeuse, typeBadgeuse))
-
         print("elif")
         print(nbPersonnesPassees)
         ts.ADD(("nbPersonnesPassees", idBadgeuse, 0),[2])
-        detectionPassage(ts, tsPersonne, idBadgeuse)
-
-        
+        detectionPassage(ts, tsPersonne, idBadgeuse)   
     else :
         print("else")
         print(nbPersonnesPassees)
@@ -247,20 +277,32 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
         
 #*******************************************************************
 
+
 def declencheAlarme(ts):
     res = ts.IN(("declencheAlarme", -1, ""),[1,2])
     print(res)
     idBadgeuse = res[0]
     typeBadgeuse = res[1]
-    if typeBadgeuse == "batiment":
-        for e in batiments_badgeuses:
-            for i in range(len(e)):
-                if idBadgeuse == e[i]:
-                    batiment = e[0]
-                    if idBadgeuse % 2 == 0:
-                        print(bcolors.FAIL + "alerte déclenchée à la sortie du batiment : "+batiment+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
-                    else:
-                         print(bcolors.FAIL + "alerte déclenchée à l'entree du batiment : "+batiment+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
+
+    if typeBadgeuse == "batiment" :
+        for batiment in data["batiments"]:
+            for badgeuse in batiment["informations"]["badgeuses"]:
+                if badgeuse["batiment"]: 
+                    if idBadgeuse == badgeuse["sortie"] or idBadgeuse == badgeuse["entree"]:
+                        if badgeuse["sortie"] == idBadgeuse:
+                            print(bcolors.FAIL + "alerte déclenchée à la sortie du batiment : "+ batiment["name"] +", porte : " + badgeuse["name"] + bcolors.RESET)
+                        else:
+                            print(bcolors.FAIL + "alerte déclenchée à l'entree du batiment : "+ batiment["name"] +", porte : " + badgeuse["name"] + bcolors.RESET)
+
+    # if typeBadgeuse == "batiment":
+    #     for e in batiments_badgeuses:
+    #         for i in range(len(e)):
+    #             if idBadgeuse == e[i]:
+    #                 batiment = e[0]
+    #                 if idBadgeuse % 2 == 0:
+    #                     print(bcolors.FAIL + "alerte déclenchée à la sortie du batiment : "+batiment+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
+    #                 else:
+    #                     print(bcolors.FAIL + "alerte déclenchée à l'entree du batiment : "+batiment+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
     else:
         for e in salles_badgeuses:
             for i in range(len(e)):
@@ -269,12 +311,79 @@ def declencheAlarme(ts):
                     if idBadgeuse % 2 == 0:
                         print(bcolors.FAIL + "alerte déclenchée à  la sortie de la salle : "+salle+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
                     else:
-                         print(bcolors.FAIL + "alerte déclenchée à l'entree de la salle : "+salle+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
+                        print(bcolors.FAIL + "alerte déclenchée à l'entree de la salle : "+salle+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
 
+# def choix(choix,tab):
+#     flag = False
+#     for t in tab:
+#         if t == choix:
+#             flag = True
+#     return flag 
 
-def main():
-    #Création des espaces de tuples
+def switchCarte(argument):
+    switcher = {
+        cartes[0]: cartes[0],
+        cartes[1]: cartes[1],
+        cartes[2]: cartes[2]
+    }
+    return (switcher.get(argument, -1))
+
+def switchBatiment(argument):
+    switcher = {
+        batiments[0] : batiments[0],
+        batiments[1] : batiments[1],
+        batiments[2] : batiments[2]
+    }
+    return (switcher.get(argument, str(-1)))
+
+def switchPorte(argument):
+    switcher = {
+        "1": 1,
+        "2": 2
+    }
+    return (switcher.get(argument, -1))
+
+def switchSalle(argument):
+    switcher = {
+        salles[0]: salles[0],
+        salles[1]: salles[1],
+        salles[2]: salles[2],
+        salles[3]: salles[3],
+    }
+    return (switcher.get(argument, str(-1)))
+
+def menu():
+    res = False
+    print(cartes)
+    choixCarte = input("choisissez votre carte : ")
+    if(switchCarte(choixCarte) != -1):
+        print(batiments)
+        choixBatiment = input("choisissez dans quel batiment voulez vous entrer :")
+        if(switchBatiment(choixBatiment) != "-1"):
+            porte = ["1","2"]
+            print("porte " + str(porte))
+            choixPorte = input("par quelle porte ?")
+            if(switchPorte(choixPorte) != -1):
+                print(salles)
+                choixSalle = input("dans quelle salle ?")
+                if(switchSalle(choixSalle)):
+                    res = True
+                else:
+                    print("salle invalide")
+            else:
+                print("porte invalide")
+        else:
+            print("batiment invalide")
+    else:
+        print("carte invalide")
+    return res
+
+def initialisationAgent():
     tupleSpaces = list()
+
+    badgeuseTest = data['batiments'][]['informations']['badgeuses'][0]['entree']
+    carteTest1 = cartes[0]
+    carteTest2 =cartes[1]
 
     tsPersonne = espaceDeTuples()
     tsBatiment = espaceDeTuples()
@@ -284,18 +393,11 @@ def main():
     tupleSpaces.append(tsBatiment)
     tupleSpaces.append(tsAutorisation)
 
-    badgeuseTest = badgeuses[1][1]
-    carteTest1 = cartes[0]
-    carteTest2 =cartes[1]
-
-    #Ajout des cartes autorisées
     tsAutorisation.listeTuples.append(("autorisationCarte",badgeuseTest, carteTest1, True))
     tsAutorisation.listeTuples.append(("autorisationCarte",badgeuseTest, carteTest2, False))
 
-    #nbPersonne dans les batiments
     tsBatiment.OUT(("nbPersonnesPassees",badgeuseTest, 0))
 
-    #Création des agents
     agentLecteurCarte = Thread(target=lecteurCarte, args=(tsBatiment, badgeuseTest, cartes[0]), daemon=True)
     agentVerifCarte = Thread(target=verifCarte, args=(tsBatiment, tsAutorisation,badgeuseTest), daemon=True)
     agentScanCarte = Thread(target=scanCarte, args=(tsBatiment,badgeuseTest,"batiment"), daemon=True)
@@ -304,26 +406,22 @@ def main():
     agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne,badgeuseTest), daemon=True)
     agentAlarme = Thread(target=declencheAlarme, args=[tsBatiment], daemon=True)
     
-    #Lancement des agents
     agentScanCarte.start()
     agentVerifCarte.start()
     agentLumiereVerte.start()
     agentLumiereRouge.start()
     agentDetectionPassage.start()
     agentAlarme.start()
-    
-    print(bcolors.WARNING +"sleep has started" + bcolors.RESET)
-    print("Ts batiment : \n","\t", tsBatiment.listeTuples)
-    print("Ts Personne : \n","\t", tsPersonne.listeTuples)
-    print("Ts autorisation: \n","\t", tsAutorisation.listeTuples)
-    sleep(3)
-    print(bcolors.WARNING + 'sleep ended ' + bcolors.RESET)
     agentLecteurCarte.start()
-    print("Ts batiment : \n","\t", tsBatiment.listeTuples)
-    print("Ts Personne : \n","\t", tsPersonne.listeTuples)
-    print("Ts autorisation: \n","\t", tsAutorisation.listeTuples)
+
+def main():
+
+    #menu()
+
+    initialisationAgent()
 
     while(True):
+        res = menu()
         sleep(1)
 
 if __name__ == '__main__':
