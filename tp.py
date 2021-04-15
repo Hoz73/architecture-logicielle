@@ -3,6 +3,7 @@ from threading import Thread, Event
 from time import sleep
 import math
 
+
 data = {
     "batiments" :
         [
@@ -367,8 +368,8 @@ def scanCarte(ts, idBadgeuse, typeBadgeuse):
 
 def lumiereVerte(ts, idBadgeuse):
     ts.IN(("lumiereVerte", idBadgeuse),[])
+    ts.OUT((""))
     print(bcolors.OK + "Accès autorisée" + bcolors.RESET)
-    delai
     sec = delai
     while(sec > 0):
         sleep(1)
@@ -388,7 +389,6 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
     res = ts.IN(("detectionPassage", idBadgeuse, -1, ""),[2,3])
     idCarte = res[0]
     typeBadgeuse = res[1]
-    delai
     sec = delai
     nbPersonne = 0
     while (sec > 0):
@@ -534,22 +534,39 @@ def lancementAgents(tab):
     for agent in tab:
         agent.start()
 
-def initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, idBadgeuse):
-    agentVerifCarte = Thread(target=verifCarte, args=(tsBatiment, tsAutorisation,idBadgeuse), daemon=True)
-    agentScanCarte = Thread(target=scanCarte, args=(tsBatiment,idBadgeuse,"batiment"), daemon=True)
-    agentLumiereVerte = Thread(target=lumiereVerte, args=(tsBatiment,idBadgeuse), daemon=True)
-    agentLumiereRouge = Thread(target=lumiereRouge, args=(tsBatiment,idBadgeuse), daemon=True)
-    agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne,idBadgeuse), daemon=True)
+def initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, tabBadgeuse):
+    res =[]
+    for idBadgeuse in tabBadgeuse:
+        agentVerifCarte = Thread(target=verifCarte, args=(tsBatiment, tsAutorisation,idBadgeuse), daemon=True)
+        agentScanCarte = Thread(target=scanCarte, args=(tsBatiment,idBadgeuse,"batiment"), daemon=True)
+        agentLumiereVerte = Thread(target=lumiereVerte, args=(tsBatiment,idBadgeuse), daemon=True)
+        agentLumiereRouge = Thread(target=lumiereRouge, args=(tsBatiment,idBadgeuse), daemon=True)
+        agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne,idBadgeuse), daemon=True)
+        agentAlarme = Thread(target=declencheAlarme, args=[tsBatiment], daemon=True)
+        tsBatiment.OUT(("nbPersonnesPassees",idBadgeuse, 0))
 
-    agents =    [agentVerifCarte,agentScanCarte,
-                agentLumiereVerte,agentLumiereRouge,agentDetectionPassage,
-                ]  
-    lancementAgents(agents)
+        res.append(agentVerifCarte)
+        res.append(agentScanCarte)
+        res.append(agentLumiereVerte)
+        res.append(agentLumiereRouge)
+        res.append(agentDetectionPassage)
+        
+        res.append(agentAlarme)
+    return res
+    # agents =    [agentVerifCarte,agentScanCarte,
+    #             agentLumiereVerte,agentLumiereRouge,agentDetectionPassage,
+    #             ]  
+    
+def start(tsBatiment, idBadgeuse, sens, carte):
+    agentLecteurCarte = Thread(target=lecteurCarte, args=(tsBatiment, idBadgeuse, carte), daemon=True)
+    agentLecteurCarte.start()
 
 def initialisationAgent():
     tupleSpaces = list()
 
     badgeuseTest = data['batiments'][0]['informations']['badgeuses'][0]['entree']
+    badgeuseTest2 = data['batiments'][1]['informations']['badgeuses'][0]['entree']
+    badgeuseTest3 = data['batiments'][2]['informations']['badgeuses'][0]['entree']
     carteTest1 = cartes[0]
     carteTest2 =cartes[1]
 
@@ -562,37 +579,23 @@ def initialisationAgent():
     tupleSpaces.append(tsAutorisation)
 
     initialisationAutorisationTuple(tsAutorisation)
-    tsBatiment.OUT(("nbPersonnesPassees",badgeuseTest, 0))
-
-    agentLecteurCarte = Thread(target=lecteurCarte, args=(tsBatiment, badgeuseTest, carteTest1), daemon=True)
-
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, badgeuseTest)
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
     
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
 
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    #agentLecteurCarte = Thread(target=lecteurCarte, args=(tsBatiment, badgeuseTest, carteTest1), daemon=True)
 
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
-    agentAlarme = Thread(target=declencheAlarme, args=[tsBatiment], daemon=True)
+    tabBadgeuse = [badgeuseTest]
+    agents = initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, tabBadgeuse)
+    
+    agentLecteurCarte = Thread(target=lecteurCarte, args=(tsBatiment, badgeuseTest, cartes[0]), daemon=True)
+    agentLecteurCarte.start()
+    lancementAgents(agents)
+    #agentAlarme = Thread(target=declencheAlarme, args=[tsBatiment], daemon=True)
     # agentVerifCarte = Thread(target=verifCarte, args=(tsBatiment, tsAutorisation,badgeuseTest), daemon=True)
     # agentScanCarte = Thread(target=scanCarte, args=(tsBatiment,badgeuseTest,"batiment"), daemon=True)
     # agentLumiereVerte = Thread(target=lumiereVerte, args=(tsBatiment,badgeuseTest), daemon=True)
     # agentLumiereRouge = Thread(target=lumiereRouge, args=(tsBatiment,badgeuseTest), daemon=True)
     # agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne,badgeuseTest), daemon=True)
-    agents = [agentLecteurCarte,agentAlarme]
-    lancementAgents(agents)
+    # agents = [agentLecteurCarte,agentAlarme]
 
 def main():
 
