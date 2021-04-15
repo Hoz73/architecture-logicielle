@@ -11,22 +11,73 @@ data = {
                 "informations" : {
                     "badgeuses" : 
                     [
-                        {"name": "est"   , "entree" : 11, "sortie" : 12, "batiment": True},
-                        {"name": "ouest" , "entree" : 13, "sortie" : 14, "batiment": True},
-                        {"name" : "8A-42", "entree" : 11, "sortie" : 12, "batiment": False},
-                        {"name" : "8A-43", "entree" : 13, "sortie" : 14, "batiment": False},
-                        {"name" : "8A-44", "entree" : 15, "sortie" : 16, "batiment": False},
-                        {"name" : "8A-45", "entree" : 17, "sortie" : 18, "batiment": False},
+                        {"name": "est"  , "entree" : 11, "sortie" : 12, "batiment": True,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name": "ouest" , "entree" : 13, "sortie" : 14, "batiment": True,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "8A-42", "entree" : 11, "sortie" : 12, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "8A-43", "entree" : 13, "sortie" : 14, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "8A-44", "entree" : 15, "sortie" : 16, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "8A-45", "entree" : 17, "sortie" : 18, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
                     ],
-                    "carte":
-                    [
-                        {"id" : 1, "autorise":True},
-                        {"id" : 2, "autorise":True},
-                        {"id" : 3, "autorise":True},
-                        {"id" : 4, "autorise":False},
-                        {"id" : 5, "autorise":False},
-                        {"id" : 6, "autorise":False}
-                    ]
                 },
             },
             {
@@ -34,22 +85,73 @@ data = {
                 "informations" : {
                     "badgeuses" : 
                     [
-                        {"name" : "4A-42", "entree" : 21, "sortie" : 22, "batiment": False},
-                        {"name" : "4A-43", "entree" : 23, "sortie" : 24, "batiment": False},
-                        {"name" : "A4-44", "entree" : 25, "sortie" : 26, "batiment": False},
-                        {"name" : "A4-45", "entree" : 27, "sortie" : 28, "batiment": False},
-                        {"name" : "nord",  "entree" : 21, "sortie" : 22, "batiment": True},
-                        {"name" : "sud" ,  "entree" : 23, "sortie" : 24, "batiment": True}
+                        {"name" : "4A-42", "entree" : 21, "sortie" : 22, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":True},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "4A-43", "entree" : 23, "sortie" : 24, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":True},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":True},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "A4-44", "entree" : 25, "sortie" : 26, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "A4-45", "entree" : 27, "sortie" : 28, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "nord",  "entree" : 21, "sortie" : 22, "batiment": True,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":True},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "sud" ,  "entree" : 23, "sortie" : 24, "batiment": True,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":True},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        }
                     ],
-                    "carte":
-                    [
-                        {"id" : 1, "autorise":True},
-                        {"id" : 2, "autorise":False},
-                        {"id" : 3, "autorise":False},
-                        {"id" : 4, "autorise":True},
-                        {"id" : 5, "autorise":True},
-                        {"id" : 6, "autorise":False},
-                    ]
                 }
             },
 
@@ -59,22 +161,72 @@ data = {
                 {
                     "badgeuses" : 
                     [
-                        {"name" : "10B-42", "entree" : 31, "sortie" : 32, "batiment": False},
-                        {"name" : "10B-43", "entree" : 33, "sortie" : 34, "batiment": False},
-                        {"name" : "10B-44", "entree" : 35, "sortie" : 36, "batiment": False},
-                        {"name" : "10B-45", "entree" : 37, "sortie" : 38, "batiment": False},
-                        {"name" : "sud" ,   "entree" : 31, "sortie" : 32, "batiment": True},
-                        {"name" : "nord",   "entree" : 33, "sortie" : 34, "batiment": True}
+                        {"name" : "10B-42", "entree" : 31, "sortie" : 32, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":True},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":True},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "10B-43", "entree" : 33, "sortie" : 34, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":True},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":True},
+                        ]
+                        },
+                        {"name" : "10B-44", "entree" : 35, "sortie" : 36, "batiment": False,"cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":False},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":True},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "10B-45", "entree" : 37, "sortie" : 38, "batiment": False,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":True},
+                            {"id" : 3, "autorise":False},
+                            {"id" : 4, "autorise":False},
+                            {"id" : 5, "autorise":False},
+                            {"id" : 6, "autorise":False},
+                        ]
+                        },
+                        {"name" : "sud" ,   "entree" : 31, "sortie" : 32, "batiment": True,
+                        "cartes":
+                        [
+                            {"id"  : 1, "autorise":True},
+                            {"id" : 2, "autorise":True},
+                            {"id" : 3, "autorise":True},
+                            {"id" : 4, "autorise":True},
+                            {"id" : 5, "autorise":True},
+                            {"id" : 6, "autorise":True},
+                        ]
+                        },
+                        {"name" : "nord",   "entree" : 33, "sortie" : 34, "batiment": True,
+                        "cartes":
+                        [
+                            {"id" : 1, "autorise":True},
+                            {"id" : 2, "autorise":True},
+                            {"id" : 3, "autorise":True},
+                            {"id" : 4, "autorise":True},
+                            {"id" : 5, "autorise":True},
+                            {"id" : 6, "autorise":True},
+                        ]
+                        }
                     ],
-                    "carte":
-                    [
-                        {"id" : 1, "autorise":True},
-                        {"id" : 2, "autorise":False},
-                        {"id" : 3, "autorise":False},
-                        {"id" : 4, "autorise":False},
-                        {"id" : 5, "autorise":False},
-                        {"id" : 6, "autorise":False}
-                    ]
                 }
             }            
         ]     
@@ -85,7 +237,7 @@ delai = 15
 tabAgent = list()
 
 
-cartes = [0,1,2]
+cartes = [1,2,3]
 
 class bcolors:
     OK = '\033[92m' #GREEN
@@ -304,21 +456,14 @@ def declencheAlarme(ts):
     #                 else:
     #                     print(bcolors.FAIL + "alerte déclenchée à l'entree du batiment : "+batiment+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
     else:
-        for e in salles_badgeuses:
-            for i in range(len(e)):
-                if idBadgeuse == e[i]:
-                    salle = e[0]
-                    if idBadgeuse % 2 == 0:
-                        print(bcolors.FAIL + "alerte déclenchée à  la sortie de la salle : "+salle+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
-                    else:
-                        print(bcolors.FAIL + "alerte déclenchée à l'entree de la salle : "+salle+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
-
-# def choix(choix,tab):
-#     flag = False
-#     for t in tab:
-#         if t == choix:
-#             flag = True
-#     return flag 
+        for e in data["batiments"]:
+            for badgeuse in batiment["informations"]["badgeuses"]:
+                if not badgeuse["batiment"]:
+                    if idBadgeuse == badgeuse["sortie"] or idBadgeuse == badgeuse["entree"]:
+                        if badgeuse["sortie"] == idBadgeuse:
+                            print(bcolors.FAIL + "alerte déclenchée à la sortie de la salle : "+ badgeuse["name"] + bcolors.RESET)
+                        else:
+                            print(bcolors.FAIL + "alerte déclenchée à l'entree de la salle : "+badgeuse["name"]+ bcolors.RESET)
 
 def switchCarte(argument):
     switcher = {
@@ -378,10 +523,33 @@ def menu():
         print("carte invalide")
     return res
 
+def initialisationAutorisationTuple(ts):
+    for batiment in data["batiments"]:
+        for badgeuse in batiment['informations']['badgeuses']:
+            for carte in badgeuse["cartes"]:
+                ts.OUT(("autorisationCarte",badgeuse["entree"], carte['id'], carte["autorise"]))
+                ts.OUT(("autorisationCarte",badgeuse["sortie"], carte['id'], carte["autorise"]))
+
+def lancementAgents(tab):
+    for agent in tab:
+        agent.start()
+
+def initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, idBadgeuse):
+    agentVerifCarte = Thread(target=verifCarte, args=(tsBatiment, tsAutorisation,idBadgeuse), daemon=True)
+    agentScanCarte = Thread(target=scanCarte, args=(tsBatiment,idBadgeuse,"batiment"), daemon=True)
+    agentLumiereVerte = Thread(target=lumiereVerte, args=(tsBatiment,idBadgeuse), daemon=True)
+    agentLumiereRouge = Thread(target=lumiereRouge, args=(tsBatiment,idBadgeuse), daemon=True)
+    agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne,idBadgeuse), daemon=True)
+
+    agents =    [agentVerifCarte,agentScanCarte,
+                agentLumiereVerte,agentLumiereRouge,agentDetectionPassage,
+                ]  
+    lancementAgents(agents)
+
 def initialisationAgent():
     tupleSpaces = list()
 
-    badgeuseTest = data['batiments'][]['informations']['badgeuses'][0]['entree']
+    badgeuseTest = data['batiments'][0]['informations']['badgeuses'][0]['entree']
     carteTest1 = cartes[0]
     carteTest2 =cartes[1]
 
@@ -393,26 +561,38 @@ def initialisationAgent():
     tupleSpaces.append(tsBatiment)
     tupleSpaces.append(tsAutorisation)
 
-    tsAutorisation.listeTuples.append(("autorisationCarte",badgeuseTest, carteTest1, True))
-    tsAutorisation.listeTuples.append(("autorisationCarte",badgeuseTest, carteTest2, False))
-
+    initialisationAutorisationTuple(tsAutorisation)
     tsBatiment.OUT(("nbPersonnesPassees",badgeuseTest, 0))
 
-    agentLecteurCarte = Thread(target=lecteurCarte, args=(tsBatiment, badgeuseTest, cartes[0]), daemon=True)
-    agentVerifCarte = Thread(target=verifCarte, args=(tsBatiment, tsAutorisation,badgeuseTest), daemon=True)
-    agentScanCarte = Thread(target=scanCarte, args=(tsBatiment,badgeuseTest,"batiment"), daemon=True)
-    agentLumiereVerte = Thread(target=lumiereVerte, args=(tsBatiment,badgeuseTest), daemon=True)
-    agentLumiereRouge = Thread(target=lumiereRouge, args=(tsBatiment,badgeuseTest), daemon=True)
-    agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne,badgeuseTest), daemon=True)
-    agentAlarme = Thread(target=declencheAlarme, args=[tsBatiment], daemon=True)
+    agentLecteurCarte = Thread(target=lecteurCarte, args=(tsBatiment, badgeuseTest, carteTest1), daemon=True)
+
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, badgeuseTest)
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
     
-    agentScanCarte.start()
-    agentVerifCarte.start()
-    agentLumiereVerte.start()
-    agentLumiereRouge.start()
-    agentDetectionPassage.start()
-    agentAlarme.start()
-    agentLecteurCarte.start()
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, 2)
+    agentAlarme = Thread(target=declencheAlarme, args=[tsBatiment], daemon=True)
+    # agentVerifCarte = Thread(target=verifCarte, args=(tsBatiment, tsAutorisation,badgeuseTest), daemon=True)
+    # agentScanCarte = Thread(target=scanCarte, args=(tsBatiment,badgeuseTest,"batiment"), daemon=True)
+    # agentLumiereVerte = Thread(target=lumiereVerte, args=(tsBatiment,badgeuseTest), daemon=True)
+    # agentLumiereRouge = Thread(target=lumiereRouge, args=(tsBatiment,badgeuseTest), daemon=True)
+    # agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne,badgeuseTest), daemon=True)
+    agents = [agentLecteurCarte,agentAlarme]
+    lancementAgents(agents)
 
 def main():
 
@@ -421,7 +601,6 @@ def main():
     initialisationAgent()
 
     while(True):
-        res = menu()
         sleep(1)
 
 if __name__ == '__main__':
