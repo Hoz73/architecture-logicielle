@@ -2,17 +2,25 @@ import json
 from bcolors import bcolors
 from tp import delai
 from time import sleep
+from enum import Enum
+
+class Color(Enum):
+    RED = 1
+    ORANGE = 2
+    GREEN = 3
+    OFF = 4
+
+etatColor = Color.OFF
 
 with open('config.json') as json_file:
     global data
     data = json.load(json_file)
 
 
+
 def lecteurCarte(ts, idBadgeuse, idCarte):
     ts.OUT(("cartePosee", idBadgeuse, idCarte))
 
-
-# *******************************************************************
 
 def verifCarte(tsBatiment, tsAutorisation, idBadgeuse):
     idCarte = tsBatiment.IN(("verifCarte", idBadgeuse, -1), [2])[0]
@@ -20,13 +28,11 @@ def verifCarte(tsBatiment, tsAutorisation, idBadgeuse):
     tsBatiment.OUT(("porteDebloquee", idBadgeuse, res))
 
 
-# *******************************************************************
-
 def scanCarte(ts, idBadgeuse, typeBadgeuse):
     idCarte = ts.IN(("cartePosee", idBadgeuse, -1), [2])[0]
     ts.OUT(("verifCarte", idBadgeuse, idCarte))
     res = ts.IN(("porteDebloquee", idBadgeuse, True), [2])[0]
-    if (res):
+    if res:
         ts.OUT(("lumiereVerte", idBadgeuse))
         ts.OUT(("detectionPassage", idBadgeuse, idCarte, typeBadgeuse))
         scanCarte(ts, idBadgeuse, typeBadgeuse)
@@ -35,28 +41,26 @@ def scanCarte(ts, idBadgeuse, typeBadgeuse):
         scanCarte(ts, idBadgeuse, typeBadgeuse)
 
 
-# *******************************************************************
-
 def lumiereVerte(ts, idBadgeuse):
     ts.IN(("lumiereVerte", idBadgeuse), [])
-    ts.OUT((""))
+    etatColor = Color.GREEN
     print(bcolors.OK + "Accès autorisée" + bcolors.RESET)
     sec = delai
     while (sec > 0):
         sleep(1)
         print(bcolors.WARNING + str(sec - 1) + " temps restant pour passer la porte " + bcolors.RESET)
         sec -= 1
+    etatColor = Color.OFF
     print(bcolors.FAIL + "Porte fermée" + bcolors.RESET)
 
 
-# *******************************************************************
-
 def lumiereRouge(ts, idBadgeuse):
     ts.IN(("lumiereRouge", idBadgeuse), [])
+    etatColor = Color.RED
     print(bcolors.FAIL + "Accès non-autorisée" + bcolors.RESET)
+    sleep(3)
+    etatColor = Color.OFF
 
-
-# *******************************************************************
 
 def detectionPassage(ts, tsPersonne, idBadgeuse):
     res = ts.IN(("detectionPassage", idBadgeuse, -1, ""), [2, 3])
@@ -65,12 +69,9 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
     sec = delai
     nbPersonne = 0
     while (sec > 0):
-        if ((sec % 4) == 0):
-            print("sec : hoey " + str(sec))
-            ts.OUT(("capteurPassage", idBadgeuse))
         sleep(1)
         passage = ts.INUNBLOCKED(("capteurPassage", idBadgeuse), [])
-        if (not None == passage):
+        if passage is None:
             nbPersonnes = ts.RD(("nbPersonnesPassees", idBadgeuse, -1), [2])[0]
             ts.ADD(("nbPersonnesPassees", idBadgeuse, nbPersonnes + 1), [2])
         sec -= 1
@@ -99,15 +100,13 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
         detectionPassage(ts, tsPersonne, idBadgeuse)
 
 
-# *******************************************************************
-
-
 def declencheAlarme(ts):
     res = ts.IN(("declencheAlarme", -1, ""), [1, 2])
-    print(res)
+
     idBadgeuse = res[0]
     typeBadgeuse = res[1]
 
+    etatColor = Color.ORANGE
     if typeBadgeuse == "batiment":
         for batiment in data["batiments"]:
             for badgeuse in batiment["informations"]["badgeuses"]:
@@ -119,18 +118,8 @@ def declencheAlarme(ts):
                         else:
                             print(bcolors.FAIL + "alerte déclenchée à l'entree du batiment : " + batiment[
                                 "name"] + ", porte : " + badgeuse["name"] + bcolors.RESET)
-
-    # if typeBadgeuse == "batiment":
-    #     for e in batiments_badgeuses:
-    #         for i in range(len(e)):
-    #             if idBadgeuse == e[i]:
-    #                 batiment = e[0]
-    #                 if idBadgeuse % 2 == 0:
-    #                     print(bcolors.FAIL + "alerte déclenchée à la sortie du batiment : "+batiment+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
-    #                 else:
-    #                     print(bcolors.FAIL + "alerte déclenchée à l'entree du batiment : "+batiment+", porte numéro : " + str(math.ceil((idBadgeuse % 10)/2)) + bcolors.RESET)
     else:
-        for e in data["batiments"]:
+        for batiment in data["batiments"]:
             for badgeuse in batiment["informations"]["badgeuses"]:
                 if not badgeuse["batiment"]:
                     if idBadgeuse == badgeuse["sortie"] or idBadgeuse == badgeuse["entree"]:
@@ -140,3 +129,5 @@ def declencheAlarme(ts):
                         else:
                             print(bcolors.FAIL + "alerte déclenchée à l'entree de la salle : " + badgeuse[
                                 "name"] + bcolors.RESET)
+    sleep(5)
+    etatColor = Color.OFF
