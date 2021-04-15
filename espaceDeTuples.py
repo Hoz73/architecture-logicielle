@@ -27,11 +27,7 @@ class espaceDeTuples():
 
     def INUNBLOCKED(self, element, tab):
         resTemp = self.existeNonBloquant(element, tab)
-        if None == resTemp:
-            # res = list()
-            # for index in tab:
-            #     res.append(element[index])
-            # return res
+        if resTemp is None:
             return None
         res = list()
         for index in tab:
