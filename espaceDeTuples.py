@@ -1,9 +1,9 @@
 class espaceDeTuples():
-    def OUT(self,element):
+    def OUT(self, element):
         self.listeTuples.append(element)
 
-    def IN(self,element,tab):
-        resTemp = self.existe(element,tab)
+    def IN(self, element, tab):
+        resTemp = self.existe(element, tab)
         res = list()
         for index in tab:
             res.append(resTemp[index])
@@ -11,22 +11,22 @@ class espaceDeTuples():
         return res
 
     def RD(self, element, tab):
-        resTemp = self.existe(element,tab)
+        resTemp = self.existe(element, tab)
         res = list()
         for index in tab:
             res.append(resTemp[index])
         return res
 
     def ADD(self, element, tab):
-        resTemp = self.existe(element,tab)
+        resTemp = self.existe(element, tab)
         index = self.listeTuples.index(resTemp)
         listTuple = list(self.listeTuples[index])
         for i in tab:
             listTuple[i] = element[i]
         self.listeTuples[index] = tuple(listTuple)
 
-    def INUNBLOCKED(self,element,tab):
-        resTemp = self.existeNonBloquant(element,tab)
+    def INUNBLOCKED(self, element, tab):
+        resTemp = self.existeNonBloquant(element, tab)
         if None == resTemp:
             # res = list()
             # for index in tab:
@@ -39,10 +39,9 @@ class espaceDeTuples():
         self.listeTuples.remove(resTemp)
         return res
 
-
     def existe(self, template, tab):
         tuplePossible = []
-        while(True):
+        while (True):
             for tupleI in self.listeTuples:
                 flag = True
                 if len(tupleI) == len(template):
@@ -61,9 +60,9 @@ class espaceDeTuples():
                 for i in allIndex:
                     if template[i] != tupleI[i]:
                         flag = False
-                if flag :
+                if flag:
                     return tupleI
-    
+
     def existeNonBloquant(self, template, tab):
         tuplePossible = []
         for tupleI in self.listeTuples:
@@ -84,8 +83,8 @@ class espaceDeTuples():
                 for i in allIndex:
                     if template[i] != tupleI[i]:
                         flag = False
-                if flag :
+                if flag:
                     return tupleI
 
     def __init__(self):
-        self.listeTuples= list()
+        self.listeTuples = list()
