@@ -2,6 +2,7 @@ from multiprocessing import Process, Value, Array
 from threading import Thread, Event
 from time import sleep
 import math
+import json
 
 
 
@@ -380,5 +381,8 @@ def main():
         sleep(1)
 
 if __name__ == '__main__':
+    with open('config.json') as json_file:
+        global data 
+        data =  json.load(json_file)
     main()
     
