@@ -38,8 +38,7 @@ def initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, tabBadge
                                 daemon=True)
         agentLumiereVerte = Thread(target=lumiereVerte, args=(tsBatiment, badgeuse["id"]), daemon=True)
         agentLumiereRouge = Thread(target=lumiereRouge, args=(tsBatiment, badgeuse["id"]), daemon=True)
-        agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne, badgeuse["id"]),
-                                       daemon=True)
+        agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne, badgeuse["id"]),daemon=True)
         agentAlarme = Thread(target=declencheAlarme, args=[tsBatiment], daemon=True)
 
         tsBatiment.OUT(("nbPersonnesPassees", badgeuse["id"], 0))
@@ -71,18 +70,12 @@ def test():
     carteTest1 = cartes[0]
     carteTest2 = cartes[1]
 
-    tsPersonne = espaceDeTuples()
-    tsBatiment = espaceDeTuples()
-    tsAutorisation = espaceDeTuples()
-
-    tupleSpaces.append(tsPersonne)
-    tupleSpaces.append(tsBatiment)
-    tupleSpaces.append(tsAutorisation)
 
     initialisationAutorisationTuple(tsAutorisation)
 
     # agentLecteurCarte = Thread(target=lecteurCarte, args=(tsBatiment, badgeuseTest, carteTest1), daemon=True)
-
+    # tsPersonne.OUT(("personnePresente", 1, 11, "batiment"))
+    # personnesPresentes(tsPersonne)
     tabBadgeuse = allBadgeuse()
     agents = initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, tabBadgeuse)
 
@@ -112,12 +105,11 @@ def allBadgeuse():
             })
     return badgeuses
 
+tsPersonne = espaceDeTuples()
+tsBatiment = espaceDeTuples()
+tsAutorisation = espaceDeTuples()
 
 def iniatilisationAgent():
-    tsPersonne = espaceDeTuples()
-    tsBatiment = espaceDeTuples()
-    tsAutorisation = espaceDeTuples()
-
     initialisationAutorisationTuple(tsAutorisation)
 
     tabBadgeuse = allBadgeuse()
@@ -129,16 +121,35 @@ def iniatilisationAgent():
     # TODO : Lancement fenetre Nico
 
 
+def personnesPresentes(tsPersonne):
+    f = open("personnePresente.txt", "w")
+    i = 1
+    for personne in tsPersonne.listeTuples:
+        res = []
+        res.append(personne[1])
+        res.append(personne[2])
+        res.append(personne[3])
+        f.write(str(i) + " -  nom : " + str(data["cartes"][str(res[0])] ) +", id badgeuse : " + str(res[1]) + ", type badgeuse : " + str(res[2]))
+        i += 1
+    f.close()
+
+def videFichiers():
+    f1 = open("personnePresente.txt", "w")
+    f2 = open("logPassage.txt", "w")
+    f1.write('')
+    f2.write('')
+    f1.close()
+    f2.close()
+
 def main():
-    # menu()
-
-    # test()
-
-    iniatilisationAgent()
+    videFichiers()
+    test()
+    #iniatilisationAgent()
 
     while (True):
+        print("while loop")
         sleep(1)
-
+        
 
 if __name__ == '__main__':
     with open('config.json') as json_file:

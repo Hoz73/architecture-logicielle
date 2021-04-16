@@ -224,5 +224,14 @@
                     ]
                 }
             }            
-        ]     
+        ],
+    "cartes":
+    {
+        "1" : "Livai",
+        "2" : "Eren",
+        "3" : "Mikasa",
+        "4" : "Armin",
+        "5" : "Hanji",
+        "6" : "Reiner"
+        }     
 }

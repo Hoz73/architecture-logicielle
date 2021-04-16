@@ -2,6 +2,7 @@ import json
 from bcolors import bcolors
 from tp import delai
 from time import sleep
+from datetime import datetime
 from enum import Enum
 
 class Color(Enum):
@@ -44,20 +45,20 @@ def scanCarte(ts, idBadgeuse, typeBadgeuse):
 def lumiereVerte(ts, idBadgeuse):
     ts.IN(("lumiereVerte", idBadgeuse), [])
     etatColor = Color.GREEN
-    print(bcolors.OK + "Accès autorisée" + bcolors.RESET)
+    print(bcolors.OK + "Accès autorisee" + bcolors.RESET)
     sec = delai
     while (sec > 0):
         sleep(1)
         print(bcolors.WARNING + str(sec - 1) + " temps restant pour passer la porte " + bcolors.RESET)
         sec -= 1
     etatColor = Color.OFF
-    print(bcolors.FAIL + "Porte fermée" + bcolors.RESET)
+    print(bcolors.FAIL + "Porte fermee" + bcolors.RESET)
 
 
 def lumiereRouge(ts, idBadgeuse):
     ts.IN(("lumiereRouge", idBadgeuse), [])
     etatColor = Color.RED
-    print(bcolors.FAIL + "Accès non-autorisée" + bcolors.RESET)
+    print(bcolors.FAIL + "Accès non-autorisee" + bcolors.RESET)
     sleep(3)
     etatColor = Color.OFF
 
@@ -69,9 +70,12 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
     sec = delai
     nbPersonne = 0
     while (sec > 0):
+        if sec == 5:
+            ts.OUT(("capteurPassage", idBadgeuse))
+            print("passage")
         sleep(1)
         passage = ts.INUNBLOCKED(("capteurPassage", idBadgeuse), [])
-        if passage is None:
+        if  passage is not None:
             nbPersonnes = ts.RD(("nbPersonnesPassees", idBadgeuse, -1), [2])[0]
             ts.ADD(("nbPersonnesPassees", idBadgeuse, nbPersonnes + 1), [2])
         sec -= 1
@@ -79,16 +83,22 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
     if nbPersonnesPassees > 1:
         print("if")
         print(nbPersonnesPassees)
+        msg = data["cartes"][str(idCarte)] + " a declenche l'alarme a la badgeuse " + str(idBadgeuse)
+        logAgent(msg)
         ts.OUT(("declencheAlarme", idBadgeuse, typeBadgeuse))
         ts.ADD(("nbPersonnesPassees", idBadgeuse, 0), [2])
         detectionPassage(ts, tsPersonne, idBadgeuse)
     elif nbPersonnesPassees == 1:
         if (idBadgeuse % 2) == 0:
-            print("badgeuse entrée")
+            print("badgeuse entree")
+            msg = data["cartes"][str(idCarte)] + " est entre via la badgeuse " + str(idBadgeuse) 
+            logAgent(msg)
             tsPersonne.OUT(("personnePresente", idCarte, idBadgeuse, typeBadgeuse))
         else:
             print("badgeuse sortie")
-            tsPersonne.IN(("personnePresente", idCarte, idBadgeuse, typeBadgeuse))
+            msg = data["cartes"][str(idCarte)] + " est sortie via la badgeuse " + str(idBadgeuse)
+            logAgent(msg)
+            tsPersonne.IN(("personnePresente", idCarte, idBadgeuse, typeBadgeuse),[])
         print("elif")
         print(nbPersonnesPassees)
         ts.ADD(("nbPersonnesPassees", idBadgeuse, 0), [2])
@@ -96,6 +106,8 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
     else:
         print("else")
         print(nbPersonnesPassees)
+        msg = data["cartes"][str(idCarte)] + " a active la badgeuse " + str(idBadgeuse) + " mais personne n'est entree"
+        logAgent(msg)
         ts.ADD(("nbPersonnesPassees", idBadgeuse, 0), [2])
         detectionPassage(ts, tsPersonne, idBadgeuse)
 
@@ -113,10 +125,10 @@ def declencheAlarme(ts):
                 if badgeuse["batiment"]:
                     if idBadgeuse == badgeuse["sortie"] or idBadgeuse == badgeuse["entree"]:
                         if badgeuse["sortie"] == idBadgeuse:
-                            print(bcolors.FAIL + "alerte déclenchée à la sortie du batiment : " + batiment[
+                            print(bcolors.FAIL + "alerte declenchee a la sortie du batiment : " + batiment[
                                 "name"] + ", porte : " + badgeuse["name"] + bcolors.RESET)
                         else:
-                            print(bcolors.FAIL + "alerte déclenchée à l'entree du batiment : " + batiment[
+                            print(bcolors.FAIL + "alerte declenchee a l'entree du batiment : " + batiment[
                                 "name"] + ", porte : " + badgeuse["name"] + bcolors.RESET)
     else:
         for batiment in data["batiments"]:
@@ -124,10 +136,17 @@ def declencheAlarme(ts):
                 if not badgeuse["batiment"]:
                     if idBadgeuse == badgeuse["sortie"] or idBadgeuse == badgeuse["entree"]:
                         if badgeuse["sortie"] == idBadgeuse:
-                            print(bcolors.FAIL + "alerte déclenchée à la sortie de la salle : " + badgeuse[
+                            print(bcolors.FAIL + "alerte declenchee a la sortie de la salle : " + badgeuse[
                                 "name"] + bcolors.RESET)
                         else:
-                            print(bcolors.FAIL + "alerte déclenchée à l'entree de la salle : " + badgeuse[
+                            print(bcolors.FAIL + "alerte declenchee a l'entree de la salle : " + badgeuse[
                                 "name"] + bcolors.RESET)
     sleep(5)
     etatColor = Color.OFF
+
+
+def logAgent(msg):
+    f = open("logPassage.txt", "a")
+    f.write("< " + datetime.now().strftime("%m/%d/%Y, %H:%M:%S") + " > : " + msg + "\n")
+    f.close()
+
