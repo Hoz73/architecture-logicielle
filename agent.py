@@ -150,3 +150,19 @@ def logAgent(msg):
     f.write("< " + datetime.now().strftime("%m/%d/%Y, %H:%M:%S") + " > : " + msg + "\n")
     f.close()
 
+# A tester
+def etatPorte(ts,batiment,idBadgeuse,etat):
+    res = ts.IN(("ouvrePorte", batiment, idBadgeuse),[1,2])
+    for i in range(len(data["batiments"])) :
+        if data["batiments"][i] == res[0]:
+            for j in range(len((data["batiments"][i]["informations"]["badgeuses"]))):
+                if data["batiments"][i]["informations"]["badgeuses"][j]["id"] == idBadgeuse:
+                    data["batiments"][i]["informations"]["badgeuses"][j]["ouvert"] = etat
+    etatPorte(ts,batiment,idBadgeuse)
+
+# A tester
+def incendie(ts,batiment):
+    batiment = ts.IN(("incendie", batiment)[1])[0]
+    for i in range(len(data["batiments"][batiment]["informations"]["badgeuses"])):
+        data["batiments"][batiment]["informations"]["badgeuses"][i]["ouvert"] = True
+    incendie(ts,batiment)
