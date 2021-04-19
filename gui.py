@@ -14,6 +14,7 @@ Config.set('graphics', 'height', '720')
 Builder.load_file('./builder.kv')
 
 class MainScreen(BoxLayout):
+    card = 0
     bat_8a = 0
     bat_8b = 0
     bat_8c = 0
@@ -21,6 +22,7 @@ class MainScreen(BoxLayout):
 
     def check_card(self):
         print("_________________________________")
+        print("card number : " + str(self.card))
         print("bat 8A door : " + str(self.bat_8a))
         print("bat 8B door : " + str(self.bat_8b))
         print("bat 8C door : " + str(self.bat_8c))
