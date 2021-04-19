@@ -1,0 +1,131 @@
+<BuildingScreen>:
+    name: '_building_'
+    GridLayout:
+        cols: 1
+        padding: 5,5,5,5
+        Label:
+            id: title
+            text: "Select a building"
+            height: 50
+            size_hint_y: None
+            color: 0,0,0,1
+        GridLayout:
+            cols: 2
+            Button:
+                id: building_1
+                name: "building_1"
+                text: "Building 1"
+                on_press: root.switchToControlPanel(building_1, app)
+            Button:
+                id: building_2
+                name: "building_2"
+                text: "Building 2"
+                on_press: root.switchToControlPanel(building_2, app)
+            Button:
+                id: building_3
+                name: "building_3"
+                text: "Building 3"
+                on_press: root.switchToControlPanel(building_3, app)
+            Button:
+                id: building_4
+                name: "building_4"
+                text: "Building 4"
+                on_press: root.switchToControlPanel(building_4, app)
+<ControlPanelScreen>:
+    name: '_control_panel_'
+    GridLayout:
+        cols: 1
+        padding: 5,5,5,5
+        GridLayout:
+            rows: 1
+            height: 50
+            size_hint_y: None
+            Button:
+                width: 150
+                size_hint_x: None
+                id: back_button
+                name: "back_button"
+                text: "<- Back to buildings"
+                on_press: root.backToBuildings()
+            Label:
+                id: title
+                text: "Make actions"
+                height: 50
+                size_hint_y: None
+                color: 0,0,0,1
+        GridLayout:
+            rows: 2
+            cols: 2
+            padding: 5,5,5,5
+            GridLayout:
+                rows: 2
+                cols: 2
+                padding: 5,5,5,5
+                ToggleButton:
+                    id: door_1
+                    name: "door_1"
+                    group: "doors"
+                    text: "Door 1"
+                ToggleButton:
+                    id: door_2
+                    name: "door_2"
+                    group: "doors"
+                    text: "Door 2"
+                ToggleButton:
+                    id: door_3
+                    name: "door_3"
+                    group: "doors"
+                    text: "Door 3"
+                ToggleButton:
+                    id: door_4
+                    name: "door_4"
+                    group: "doors"
+                    text: "Door 4"
+
+            GridLayout:
+                cols: 1
+                padding: 5,5,5,5
+                ToggleButton:
+                    id: card_1
+                    name: "card_1"
+                    group: "cards"
+                    text: "Card 1"
+                ToggleButton:
+                    id: card_2
+                    name: "card_2"
+                    group: "cards"
+                    text: "Card 2"
+                ToggleButton:
+                    id: card_3
+                    name: "card_3"
+                    group: "cards"
+                    text: "Card 3"
+                ToggleButton:
+                    id: card_4
+                    name: "card_4"
+                    group: "cards"
+                    text: "Card 4"
+            GridLayout:
+                rows: 1
+                padding: 5,5,5,5
+                ToggleButton:
+                    id: move_in
+                    name: "move_in"
+                    group: "move"
+                    text: "Get in"
+                ToggleButton:
+                    id: move_out
+                    name: "move_out"
+                    group: "move"
+                    text: "Get out"
+            GridLayout:
+                rows: 1
+                padding: 5,5,5,5
+                Button:
+                    id: put_card
+                    name: "put_card"
+                    text: "Put card on badger"
+                Button:
+                    id: pass_door
+                    name: "pass_door"
+                    text: "Pass through the door"

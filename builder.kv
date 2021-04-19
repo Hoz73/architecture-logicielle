@@ -1,131 +1,284 @@
-<BuildingScreen>:
-    name: '_building_'
-    GridLayout:
-        cols: 1
-        padding: 5,5,5,5
-        Label:
-            id: title
-            text: "Select a building"
-            height: 50
-            size_hint_y: None
-            color: 0,0,0,1
-        GridLayout:
-            cols: 2
-            Button:
-                id: building_1
-                name: "building_1"
-                text: "Building 1"
-                on_press: root.switchToControlPanel(building_1, app)
-            Button:
-                id: building_2
-                name: "building_2"
-                text: "Building 2"
-                on_press: root.switchToControlPanel(building_2, app)
-            Button:
-                id: building_3
-                name: "building_3"
-                text: "Building 3"
-                on_press: root.switchToControlPanel(building_3, app)
-            Button:
-                id: building_4
-                name: "building_4"
-                text: "Building 4"
-                on_press: root.switchToControlPanel(building_4, app)
-<ControlPanelScreen>:
-    name: '_control_panel_'
-    GridLayout:
-        cols: 1
-        padding: 5,5,5,5
-        GridLayout:
-            rows: 1
-            height: 50
-            size_hint_y: None
-            Button:
-                width: 150
-                size_hint_x: None
-                id: back_button
-                name: "back_button"
-                text: "<- Back to buildings"
-                on_press: root.backToBuildings()
-            Label:
-                id: title
-                text: "Make actions"
-                height: 50
-                size_hint_y: None
-                color: 0,0,0,1
-        GridLayout:
-            rows: 2
-            cols: 2
+<MainScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint: 1, .1
+            orientation: 'horizontal'
             padding: 5,5,5,5
-            GridLayout:
-                rows: 2
-                cols: 2
-                padding: 5,5,5,5
-                ToggleButton:
-                    id: door_1
-                    name: "door_1"
-                    group: "doors"
-                    text: "Door 1"
-                ToggleButton:
-                    id: door_2
-                    name: "door_2"
-                    group: "doors"
-                    text: "Door 2"
-                ToggleButton:
-                    id: door_3
-                    name: "door_3"
-                    group: "doors"
-                    text: "Door 3"
-                ToggleButton:
-                    id: door_4
-                    name: "door_4"
-                    group: "doors"
-                    text: "Door 4"
+            spacing: 5
+            ToggleButton:
+                color: 1,1,1,1
+                group: "cards"
+                text: 'Carte 1'
+            ToggleButton:
+                color: 1,1,1,1
+                group: "cards"
+                text: 'Carte 2'
+            ToggleButton:
+                color: 1,1,1,1
+                group: "cards"
+                text: 'Carte 3'
+            ToggleButton:
+                color: 1,1,1,1
+                group: "cards"
+                text: 'Carte 4'
+        FloatLayout:
+            size_hint: 1, .8
+            canvas:
+                Color:
+                    rgba: .8,.8,.8,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
 
-            GridLayout:
-                cols: 1
-                padding: 5,5,5,5
+            # Titre
+            Label:
+                pos: 630,598
+                size: 20,20
+                size_hint: None, None
+                color: 0,0,0,1
+                text: "Batiments / Salles"
+
+
+            # Batiment 8A
+            RelativeLayout:
+                pos: 150, 438
+                size: 300, 120
+                size_hint: None, None
+                canvas:
+                    Color:
+                        rgba: .6,.6,.6,1
+                    Rectangle:
+                        pos: 0,0
+                        size: self.size
                 ToggleButton:
-                    id: card_1
-                    name: "card_1"
-                    group: "cards"
-                    text: "Card 1"
+                    pos: -35,35
+                    size: 70,50
+                    size_hint: None, None
+                    group: "bat_8a"
+                    color: 0,0,0,1
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    text: "Entree\nOUEST"
+                    on_press: root.bat_8a = 1
                 ToggleButton:
-                    id: card_2
-                    name: "card_2"
-                    group: "cards"
-                    text: "Card 2"
+                    pos: 265,35
+                    size: 70,50
+                    size_hint: None, None
+                    group: "bat_8a"
+                    color: 0,0,0,1
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    text: "Entree\nEST"
+                    on_press: root.bat_8a = 2
                 ToggleButton:
-                    id: card_3
-                    name: "card_3"
-                    group: "cards"
-                    text: "Card 3"
+                    pos: 60,65
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8a"
+                    color: 0,0,0,1
+                    text: "Salle 1"
+                    on_press: root.bat_8a = 3
                 ToggleButton:
-                    id: card_4
-                    name: "card_4"
-                    group: "cards"
-                    text: "Card 4"
-            GridLayout:
-                rows: 1
-                padding: 5,5,5,5
+                    pos: 165,65
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8a"
+                    color: 0,0,0,1
+                    text: "Salle 2"
+                    on_press: root.bat_8a = 4
                 ToggleButton:
-                    id: move_in
-                    name: "move_in"
-                    group: "move"
-                    text: "Get in"
+                    pos: 60,5
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8a"
+                    color: 0,0,0,1
+                    text: "Salle 3"
+                    on_press: root.bat_8a = 5
                 ToggleButton:
-                    id: move_out
-                    name: "move_out"
-                    group: "move"
-                    text: "Get out"
-            GridLayout:
-                rows: 1
-                padding: 5,5,5,5
-                Button:
-                    id: put_card
-                    name: "put_card"
-                    text: "Put card on badger"
-                Button:
-                    id: pass_door
-                    name: "pass_door"
-                    text: "Pass through the door"
+                    pos: 165,5
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8a"
+                    color: 0,0,0,1
+                    text: "Salle 4"
+                    on_press: root.bat_8a = 6
+                Label:
+                    pos: 140,-30
+                    size: 20,20
+                    size_hint: None, None
+                    color: 0,0,0,1
+                    text: "Batiment 8A"
+
+            # Batiment 8B
+            RelativeLayout:
+                pos: 830, 438
+                size: 300, 120
+                size_hint: None, None
+                canvas:
+                    Color:
+                        rgba: .6,.6,.6,1
+                    Rectangle:
+                        pos: 0,0
+                        size: self.size
+                ToggleButton:
+                    pos: -35,35
+                    size: 70,50
+                    size_hint: None, None
+                    group: "bat_8b"
+                    color: 0,0,0,1
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    text: "Entree\nOUEST"
+                    on_press: root.bat_8b = 1
+                ToggleButton:
+                    pos: 265,35
+                    size: 70,50
+                    size_hint: None, None
+                    group: "bat_8b"
+                    color: 0,0,0,1
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    text: "Entree\nEST"
+                    on_press: root.bat_8b = 2
+                ToggleButton:
+                    pos: 60,65
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8b"
+                    color: 0,0,0,1
+                    text: "Salle 1"
+                    on_press: root.bat_8b = 3
+                ToggleButton:
+                    pos: 165,65
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8b"
+                    color: 0,0,0,1
+                    text: "Salle 2"
+                    on_press: root.bat_8b = 4
+                ToggleButton:
+                    pos: 60,5
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8b"
+                    color: 0,0,0,1
+                    text: "Salle 3"
+                    on_press: root.bat_8b = 5
+                ToggleButton:
+                    pos: 165,5
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8b"
+                    color: 0,0,0,1
+                    text: "Salle 4"
+                    on_press: root.bat_8b = 6
+                Label:
+                    pos: 140,-30
+                    size: 20,20
+                    size_hint: None, None
+                    color: 0,0,0,1
+                    text: "Batiment 8B"
+
+            # Batiment 8C
+            RelativeLayout:
+                pos: 490, 162
+                size: 300, 120
+                size_hint: None, None
+                canvas:
+                    Color:
+                        rgba: .6,.6,.6,1
+                    Rectangle:
+                        pos: 0,0
+                        size: self.size
+                ToggleButton:
+                    pos: -35,35
+                    size: 70,50
+                    size_hint: None, None
+                    group: "bat_8c"
+                    color: 0,0,0,1
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    text: "Entree\nOUEST"
+                    on_press: root.bat_8c = 1
+                ToggleButton:
+                    pos: 265,35
+                    size: 70,50
+                    size_hint: None, None
+                    group: "bat_8c"
+                    color: 0,0,0,1
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    text: "Entree\nEST"
+                    on_press: root.bat_8c = 2
+                ToggleButton:
+                    pos: 60,65
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8c"
+                    color: 0,0,0,1
+                    text: "Salle 1"
+                    on_press: root.bat_8c = 3
+                ToggleButton:
+                    pos: 165,65
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8c"
+                    color: 0,0,0,1
+                    text: "Salle 2"
+                    on_press: root.bat_8c = 4
+                ToggleButton:
+                    pos: 60,5
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8c"
+                    color: 0,0,0,1
+                    text: "Salle 3"
+                    on_press: root.bat_8c = 5
+                ToggleButton:
+                    pos: 165,5
+                    size: 75,50
+                    size_hint: None, None
+                    group: "bat_8c"
+                    color: 0,0,0,1
+                    text: "Salle 4"
+                    on_press: root.bat_8c = 6
+                Label:
+                    pos: 140,-30
+                    size: 20,20
+                    size_hint: None, None
+                    color: 0,0,0,1
+                    text: "Batiment 8C"
+
+        BoxLayout:
+            size_hint: 1, .1
+            orientation: 'horizontal'
+            padding: 5,5,5,5
+            spacing: 5
+            Button:
+                color: 1,1,1,1
+                text: 'Poser carte'
+                on_press: root.check_card()
+            Button:
+                color: 1,1,1,1
+                text: '+ Personne'
+                on_press: root.nb_person += 1
+            Button:
+                color: 1,1,1,1
+                text: '- Personne'
+                on_press: root.nb_person -= 1
+            #Button:
+            #    color: 1,1,1,1
+            #    text: 'Logs'
