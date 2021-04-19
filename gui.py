@@ -24,8 +24,19 @@ class MainScreen(BoxLayout):
         print("bat 8A door : " + str(self.bat_8a))
         print("bat 8B door : " + str(self.bat_8b))
         print("bat 8C door : " + str(self.bat_8c))
-        print("nb person : " + str(self.nb_person))
     
+    def add_person(self):
+        self.nb_person += 1
+        print("nb person : " + str(self.nb_person))
+
+    def remove_person(self):
+        if self.nb_person > 0 :
+            self.nb_person -= 1
+            print("nb person : " + str(self.nb_person))
+        else:
+            print("nb person already at 0")
+
+
 class app(App):
     def build(self):
         return MainScreen()
