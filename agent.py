@@ -30,7 +30,9 @@ def verifCarte(tsBatiment, tsAutorisation, idBadgeuse):
 
 
 def scanCarte(ts, idBadgeuse, typeBadgeuse):
-    idCarte = ts.IN(("cartePosee", idBadgeuse, -1), [2])[0]
+    res = ts.IN(("cartePosee", idBadgeuse, -1), [2])
+    idCarte = res[0]
+    batiment = trouverBatiment(idBadgeuse,typeBadgeuse)
     ts.OUT(("verifCarte", idBadgeuse, idCarte))
     res = ts.IN(("porteDebloquee", idBadgeuse, True), [2])[0]
     if res:
@@ -67,6 +69,10 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
     res = ts.IN(("detectionPassage", idBadgeuse, -1, ""), [2, 3])
     idCarte = res[0]
     typeBadgeuse = res[1]
+    batiment = trouverBatiment(idBadgeuse, typeBadgeuse)
+    resType = typeBadgeuse == "batiment"
+    
+    ts.OUT(("actionPorte", batiment, idBadgeuse, resType))
     sec = delai
     nbPersonne = 0
     while (sec > 0):
@@ -79,6 +85,7 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
             nbPersonnes = ts.RD(("nbPersonnesPassees", idBadgeuse, -1), [2])[0]
             ts.ADD(("nbPersonnesPassees", idBadgeuse, nbPersonnes + 1), [2])
         sec -= 1
+    ts.OUT(("actionPorte", batiment, idBadgeuse, resType))
     nbPersonnesPassees = ts.RD(("nbPersonnesPassees", idBadgeuse, -1), [2])[0]
     if nbPersonnesPassees > 1:
         print("if")
@@ -151,14 +158,16 @@ def logAgent(msg):
     f.close()
 
 # A tester
-def etatPorte(ts,batiment,idBadgeuse,etat):
-    res = ts.IN(("ouvrePorte", batiment, idBadgeuse),[1,2])
+def etatPorte(ts,batiment,etat):
+    res = ts.IN(("actionPorte", batiment, -1, False),[1,2,3])
     for i in range(len(data["batiments"])) :
-        if data["batiments"][i] == res[0]:
+        if data["batiments"][i]["name"] == res[0]:
             for j in range(len((data["batiments"][i]["informations"]["badgeuses"]))):
-                if data["batiments"][i]["informations"]["badgeuses"][j]["id"] == idBadgeuse:
-                    data["batiments"][i]["informations"]["badgeuses"][j]["ouvert"] = etat
-    etatPorte(ts,batiment,idBadgeuse)
+                if (data["batiments"][i]["informations"]["badgeuses"][j]["entree"] == res[1] or data["batiments"][i]["informations"]["badgeuses"][j]["sortie"] == res[1]) and data["batiments"][i]["informations"]["badgeuses"][j]["batiment"] == res[2]:
+                    data["batiments"][i]["informations"]["badgeuses"][j]["ouvert"] =  etat
+                    print("etat actuelle :", etat)
+                    etat = not etat
+    etatPorte(ts,batiment, etat)
 
 # A tester
 def incendie(ts,batiment):
@@ -166,3 +175,11 @@ def incendie(ts,batiment):
     for i in range(len(data["batiments"][batiment]["informations"]["badgeuses"])):
         data["batiments"][batiment]["informations"]["badgeuses"][i]["ouvert"] = True
     incendie(ts,batiment)
+
+def trouverBatiment(idBadgeuse, typeBadgeuse):
+    for bat in data["batiments"]:
+        for badgeuse in bat["informations"]["badgeuses"]:
+            if (badgeuse["batiment"] == typeBadgeuse or typeBadgeuse == "batiment") and (badgeuse["entree"] == idBadgeuse or badgeuse["sortie"] == idBadgeuse):
+                return bat["name"]
+    return None
+            

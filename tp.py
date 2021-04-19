@@ -30,8 +30,9 @@ def lancementAgents(tab):
 
 def initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, tabBadgeuse):
     res = []
-
+    i = 0
     for badgeuse in tabBadgeuse:
+        batiment = trouverBatiment(badgeuse["id"], badgeuse["batiment"])
         agentVerifCarte = Thread(target=verifCarte, args=(tsBatiment, tsAutorisation, badgeuse["id"]), daemon=True)
         agentScanCarte = Thread(target=scanCarte,
                                 args=(tsBatiment, badgeuse["id"], "batiment" if badgeuse["batiment"] else "salle"),
@@ -40,7 +41,10 @@ def initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, tabBadge
         agentLumiereRouge = Thread(target=lumiereRouge, args=(tsBatiment, badgeuse["id"]), daemon=True)
         agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne, badgeuse["id"]),daemon=True)
         agentAlarme = Thread(target=declencheAlarme, args=[tsBatiment], daemon=True)
-
+        agentIncendie = Thread(target=incendie, args=(tsBatiment,batiment), daemon=True)
+        if badgeuse["id"] % 2 == 1:
+            agentPorte = Thread(target=etatPorte, args=(tsBatiment,batiment,True),daemon=True)
+            res.append(agentPorte)
         tsBatiment.OUT(("nbPersonnesPassees", badgeuse["id"], 0))
 
         res.append(agentVerifCarte)
@@ -49,6 +53,7 @@ def initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, tabBadge
         res.append(agentLumiereRouge)
         res.append(agentDetectionPassage)
         res.append(agentAlarme)
+        res.append(agentIncendie)
 
     return res
     # agents =    [agentVerifCarte,agentScanCarte,
