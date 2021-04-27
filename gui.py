@@ -12,7 +12,7 @@ from kivy.graphics import Triangle
 from kivy.graphics import Color
 
 import time
-
+from threading import Thread
 
 Config.set('graphics', 'width', '1280')
 Config.set('graphics', 'height', '720')
@@ -24,6 +24,7 @@ Builder.load_file('./builder.kv')
 class MainScreen(BoxLayout):
     card = 0
     bat = 0
+    inout = "in"
     nb_person = 0
     isset_incendie = False
 
@@ -35,7 +36,8 @@ class MainScreen(BoxLayout):
     def check_card(self):
         print("_________________________________")
         print("card number : " + str(self.card))
-        print("bat 8A door : " + str(self.bat))
+        print("bat door : " + str(self.bat))
+        print("Entrer / sortir : " + self.inout)
     
     def add_person(self):
         self.nb_person += 1
@@ -74,30 +76,23 @@ class MainScreen(BoxLayout):
         c = self.WHITE
         if self.isset_incendie == True:
             c = self.FIRE
+        print("incendie : " + str(self.isset_incendie))
         self.redraw(self.WHITE, self.WHITE, c)
 
     def change_to_white(self):
         self.redraw(self.WHITE, self.WHITE, self.WHITE)
-    
 
-
-
-                
-
-    
-class Lights(BoxLayout):
-
-    def __init__(self):
-        pass
-        
-
-    def on_change(self):
-        pass
-
+    def print_logs(self):
+        print("logs here")
 
 class app(App):
     def build(self):
         return MainScreen()
 
-if __name__ == '__main__':
+def start():
     app().run()
+
+if __name__ == '__main__':
+    t = Thread(target=start(), daemon=True)
+    t.start()
+    

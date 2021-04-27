@@ -108,7 +108,7 @@
                     group: "bat"
                     color: 0,0,0,1
                     text: "Salle 1"
-                    on_press: root.bat = 4
+                    on_press: root.bat = 2
                 ToggleButton:
                     pos: 70,5
                     size: 75,50
@@ -116,7 +116,7 @@
                     group: "bat"
                     color: 0,0,0,1
                     text: "Salle 2"
-                    on_press: root.bat = 6
+                    on_press: root.bat = 3
                 Label:
                     pos: 60,-30
                     size: 15,15
@@ -145,7 +145,7 @@
                     halign: 'center'
                     valign: 'middle'
                     text: "Entree\nOUEST"
-                    on_press: root.bat = 11
+                    on_press: root.bat = 4
                 ToggleButton:
                     pos: 180,35
                     size: 70,50
@@ -156,7 +156,7 @@
                     halign: 'center'
                     valign: 'middle'
                     text: "Entree\nEST"
-                    on_press: root.bat = 12
+                    on_press: root.bat = 5
                 ToggleButton:
                     pos: 70,35
                     size: 75,50
@@ -164,13 +164,29 @@
                     group: "bat"
                     color: 0,0,0,1
                     text: "Salle 1"
-                    on_press: root.bat = 13
+                    on_press: root.bat = 6
                 Label:
                     pos: 100,-30
                     size: 15,15
                     size_hint: None, None
                     color: 0,0,0,1
                     text: "Batiment 8B"
+
+        BoxLayout:
+            size_hint: 1, .1
+            orientation: 'horizontal'
+            padding: 5,5,5,5
+            spacing: 5
+            ToggleButton:
+                group: "inout"
+                color: 1,1,1,1
+                text: "Entrer"
+                on_press: root.inout = "in"
+            ToggleButton:
+                group: "inout"
+                color: 1,1,1,1
+                text: "Sortir"
+                on_press: root.inout = "out"
 
         BoxLayout:
             size_hint: 1, .1
@@ -193,3 +209,7 @@
                 color: 1,1,1,1
                 text: 'Incendie'
                 on_press: root.change_to_fire()
+            Button:
+                color: 1,1,1,1
+                text: 'Logs'
+                on_press: root.print_logs()
