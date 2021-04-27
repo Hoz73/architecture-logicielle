@@ -566,6 +566,17 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 OUTPUT /home/neptune/Desktop/Architecture/architecture-logicielle/architecture.toc
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/image/classe.png
+INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/image/classe.png
+INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/image/classe.png
+INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/image/classe.png
+INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/image/classe.png
+INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
+INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/image/sequence.png
+INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/image/sequence.png
+INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/image/sequence.png
+INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/image/sequence.png
+INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/image/sequence.png
 INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/architecture.aux
 INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/architecture.out
 INPUT /home/neptune/Desktop/Architecture/architecture-logicielle/architecture.out
@@ -575,6 +586,7 @@ INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
+INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb
