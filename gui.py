@@ -29,7 +29,7 @@ class MainScreen(BoxLayout):
     WHITE = [1,1,1,1]
     RED = [1,0,0,1]
     GREEN = [0,1,0,1]
-    FIRE = [1,0,0,1]
+    FIRE = [1,.5,0,1]
 
     def check_card(self):
         print("_________________________________")
