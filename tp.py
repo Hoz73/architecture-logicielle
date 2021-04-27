@@ -12,7 +12,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.config import Config
 from kivy.graphics import Ellipse
 from kivy.graphics import Triangle
-from kivy.graphics import Color
+from kivy.graphics import Color as kvColor
 import time
 from multiprocessing import Process, Value, Array
 from threading import Thread, Event
@@ -61,11 +61,18 @@ def lancementAgents(tab):
     for agent in tab:
         agent.start()
 
+def indexBatiment(string):
+    for i in range(len(data)):
+        if data["batiments"][i]["name"] == string:
+            return i
+    return -1
+
 def initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, tabBadgeuse):
     res = []
     i = 0
     for badgeuse in tabBadgeuse:
         batiment = trouverBatiment(badgeuse["id"], badgeuse["batiment"])
+        numBatiment = indexBatiment(batiment)
         agentVerifCarte = Thread(target=verifCarte, args=(tsBatiment, tsAutorisation, badgeuse["id"]), daemon=True)
         agentScanCarte = Thread(target=scanCarte,
                                 args=(tsBatiment, badgeuse["id"], "batiment" if badgeuse["batiment"] else "salle"),
@@ -74,7 +81,7 @@ def initialisationAgentBadgeuse(tsBatiment, tsAutorisation, tsPersonne, tabBadge
         agentLumiereRouge = Thread(target=lumiereRouge, args=(tsBatiment, badgeuse["id"]), daemon=True)
         agentDetectionPassage = Thread(target=detectionPassage, args=(tsBatiment, tsPersonne, badgeuse["id"]),daemon=True)
         agentAlarme = Thread(target=declencheAlarme, args=[tsBatiment], daemon=True)
-        agentIncendie = Thread(target=incendie, args=(tsBatiment,batiment), daemon=True)
+        agentIncendie = Thread(target=incendie, args=(tsBatiment,numBatiment), daemon=True)
         if badgeuse["id"] % 2 == 1:
             agentPorte = Thread(target=etatPorte, args=(tsBatiment,batiment,True),daemon=True)
             res.append(agentPorte)
@@ -146,7 +153,8 @@ tsBatiment = espaceDeTuples()
 tsAutorisation = espaceDeTuples()
 
 
-def initialisationAgent():
+def initialisationAgent(app):
+    print("Agent lance")
     initialisationAutorisationTuple(tsAutorisation)
 
     tabBadgeuse = allBadgeuse()
@@ -157,6 +165,14 @@ def initialisationAgent():
 
     # TODO : Lancement fenetre Nico
 
+    agentListenGreen = Thread(target = app.mainScreen.listenGreen, args=[tsBatiment], daemon = True) 
+    agentListenRed = Thread(target = app.mainScreen.listenRed, args=[tsBatiment], daemon = True)
+    agentListenFire = Thread(target = app.mainScreen.listenFire, args=[tsBatiment], daemon = True)
+    
+    
+    agentListenFire.start()
+    agentListenGreen.start()
+    agentListenRed.start()
 
 def personnesPresentes(tsPersonne):
     f = open("personnePresente.txt", "w")
@@ -179,17 +195,24 @@ def videFichiers():
     f1.close()
     f2.close()
 
-
+kivyApp = None
 def startScreen():
-    app().run()
+    global kivyApp
+    kivyApp = app()
+    kivyApp.run()
+
 
 def main():
     screen = Thread(target = startScreen, daemon = True)
     screen.start()
+    sleep(1)
+
+    
+
     videFichiers()
     #test()
-    initialisationAgent()
-
+    
+    initialisationAgent(kivyApp)
     screen.join()
         
 
@@ -208,7 +231,6 @@ class MainScreen(BoxLayout):
     idBadgeuse = 0
     estBatiment = False
     entree = True
-    
 
     WHITE =     [1,1,1,1]
     RED =       [1,0,0,1]
@@ -225,6 +247,7 @@ class MainScreen(BoxLayout):
         print("Entrer / sortir : " + self.inout)
     
     def add_person(self):
+        global tsBatiment
         tsBatiment.IN(("capteurPassage", self.vraiIdBadgeuse()))
 
 
@@ -232,15 +255,14 @@ class MainScreen(BoxLayout):
         c = self.ids.floatlayout.canvas
         with c:
             c.get_group('a').clear()
-            Color(0,1,0)
+            kvColor(green[0], green[1], green[2], green[3])
             c.add(Ellipse(pos=(112, 418), size=(80, 80)))
         
-            Color(0,1,0,1)
+            kvColor(red[0], red[1], red[2], red[3])
             c.add(Ellipse(pos=(112, 320), size=(80, 80)))
 
-            Color(0,1,0,1)
+            kvColor(fire[0], fire[1], fire[2], fire[3])
             c.add(Triangle(points=(112,218,152,298,192,218)))
-
         
 
     def change_to_green(self):
@@ -250,9 +272,37 @@ class MainScreen(BoxLayout):
         self.redraw(self.WHITE, self.RED, self.WHITE)
 
     def change_to_fire(self):
-        #tsBatiment.OUT(("incendie", self.idBadgeuse / 10 - 1))
         c = self.FIRE
         self.redraw(self.WHITE, self.WHITE, c)
+
+    def mettreFeu(self):
+        global tsBatiment
+        tsBatiment.OUT(("incendie",indexBatiment(trouverBatiment(self.idBadgeuse,self.estBatiment))))
+        for i in tsBatiment.listeTuples:
+            print(i)
+
+    def listenGreen(self, tsBatiment):
+        print("ton pere suce des bites en enfer green")
+
+        tsBatiment.IN(("turnOnLightGreen",0),[])
+        self.change_to_green()
+        tsBatiment.IN(("turnOffLightGreen",0),[])
+        self.listenGreen()
+    
+    def listenRed(self, tsBatiment):
+        print("ton pere suce des bites en enfer red ")
+
+        tsBatiment.IN(("turnOnLightRed",0),[])
+        self.change_to_red()
+        tsBatiment.IN(("turnOffLightRed",0),[])
+        self.listenRed()
+
+    def listenFire(self, tsBatiment):
+        print("ton pere suce des bites en enfer fire")
+        tsBatiment.IN(("turnOnLightFire",0),[])
+        print("ta mere suce des bites en enfer")
+        self.change_to_fire()
+
 
     def change_to_white(self):
         self.redraw(self.WHITE, self.WHITE, self.WHITE)
@@ -261,13 +311,22 @@ class MainScreen(BoxLayout):
         print("logs here")
 
 
+    def __init__(self):
+        super().__init__()
+        global tsBatiment
+      
+        
+
 class app(App):
+
+
 
     def build(self):
         Config.set('graphics', 'width', '1280')
         Config.set('graphics', 'height', '720')
         Builder.load_file('./builder.kv')
-        return MainScreen()
+        self.mainScreen = MainScreen()
+        return self.mainScreen
 
 
 

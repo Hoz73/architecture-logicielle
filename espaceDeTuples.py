@@ -38,7 +38,7 @@ class espaceDeTuples():
     def existe(self, template, tab):
         tuplePossible = []
         while (True):
-            sleep(0.2)
+            sleep(0.6)
             for tupleI in self.listeTuples:
                 flag = True
                 if len(tupleI) == len(template):

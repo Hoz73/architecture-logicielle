@@ -43,6 +43,7 @@ def scanCarte(ts, idBadgeuse, typeBadgeuse):
 
 def lumiereVerte(ts, idBadgeuse):
     ts.IN(("lumiereVerte", idBadgeuse), [])
+    ts.OUT(("turnOnLightGreen",0))
     etatColor = Color.GREEN
     print(bcolors.OK + "Accès autorisee" + bcolors.RESET)
     sec = delai
@@ -51,14 +52,20 @@ def lumiereVerte(ts, idBadgeuse):
         print(bcolors.WARNING + str(sec - 1) + " temps restant pour passer la porte " + bcolors.RESET)
         sec -= 1
     etatColor = Color.OFF
+    ts.OUT(("turnOffLightGreen",0))
+
     print(bcolors.FAIL + "Porte fermee" + bcolors.RESET)
 
 def lumiereRouge(ts, idBadgeuse):
     ts.IN(("lumiereRouge", idBadgeuse), [])
+    ts.OUT(("turnOnLightRed",0))
+
     etatColor = Color.RED
     print(bcolors.FAIL + "Accès non-autorisee" + bcolors.RESET)
     sleep(3)
     etatColor = Color.OFF
+    ts.OUT(("turnOffLightRed",0))
+
 
 def detectionPassage(ts, tsPersonne, idBadgeuse):
     res = ts.IN(("detectionPassage", idBadgeuse, -1, ""), [2, 3])
@@ -164,13 +171,13 @@ def etatPorte(ts,batiment,etat):
     etatPorte(ts,batiment, etat)
 
 # A tester
-def incendie(ts,batiment):
+def incendie(ts,batiment, ):
     batiment = ts.IN(("incendie", batiment),[1])[0]
     for i in range(len(data["batiments"][batiment]["informations"]["badgeuses"])):
         data["batiments"][batiment]["informations"]["badgeuses"][i]["ouvert"] = True
-    incendie(ts,batiment)
+    ts.OUT(("turnOnLightFire",0))
 
-    
+
 def trouverBatiment(idBadgeuse, typeBadgeuse):
     for bat in data["batiments"]:
         for badgeuse in bat["informations"]["badgeuses"]:
