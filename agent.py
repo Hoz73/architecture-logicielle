@@ -5,6 +5,7 @@ from time import sleep
 from datetime import datetime
 from enum import Enum
 
+
 class Color(Enum):
     RED = 1
     ORANGE = 2
@@ -18,16 +19,13 @@ with open('config.json') as json_file:
     data = json.load(json_file)
 
 
-
 def lecteurCarte(ts, idBadgeuse, idCarte):
     ts.OUT(("cartePosee", idBadgeuse, idCarte))
-
 
 def verifCarte(tsBatiment, tsAutorisation, idBadgeuse):
     idCarte = tsBatiment.IN(("verifCarte", idBadgeuse, -1), [2])[0]
     res = tsAutorisation.RD(("autorisationCarte", idBadgeuse, idCarte, True), [3])[0]
     tsBatiment.OUT(("porteDebloquee", idBadgeuse, res))
-
 
 def scanCarte(ts, idBadgeuse, typeBadgeuse):
     res = ts.IN(("cartePosee", idBadgeuse, -1), [2])
@@ -43,7 +41,6 @@ def scanCarte(ts, idBadgeuse, typeBadgeuse):
         ts.OUT(("lumiereRouge", idBadgeuse))
         scanCarte(ts, idBadgeuse, typeBadgeuse)
 
-
 def lumiereVerte(ts, idBadgeuse):
     ts.IN(("lumiereVerte", idBadgeuse), [])
     etatColor = Color.GREEN
@@ -56,14 +53,12 @@ def lumiereVerte(ts, idBadgeuse):
     etatColor = Color.OFF
     print(bcolors.FAIL + "Porte fermee" + bcolors.RESET)
 
-
 def lumiereRouge(ts, idBadgeuse):
     ts.IN(("lumiereRouge", idBadgeuse), [])
     etatColor = Color.RED
     print(bcolors.FAIL + "Accès non-autorisee" + bcolors.RESET)
     sleep(3)
     etatColor = Color.OFF
-
 
 def detectionPassage(ts, tsPersonne, idBadgeuse):
     res = ts.IN(("detectionPassage", idBadgeuse, -1, ""), [2, 3])
@@ -118,7 +113,6 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
         ts.ADD(("nbPersonnesPassees", idBadgeuse, 0), [2])
         detectionPassage(ts, tsPersonne, idBadgeuse)
 
-
 def declencheAlarme(ts):
     res = ts.IN(("declencheAlarme", -1, ""), [1, 2])
 
@@ -151,12 +145,12 @@ def declencheAlarme(ts):
     sleep(5)
     etatColor = Color.OFF
 
-
 def logAgent(msg):
     f = open("logPassage.txt", "a")
     f.write("< " + datetime.now().strftime("%m/%d/%Y, %H:%M:%S") + " > : " + msg + "\n")
     f.close()
 
+    
 # A tester
 def etatPorte(ts,batiment,etat):
     res = ts.IN(("actionPorte", batiment, -1, False),[1,2,3])
@@ -171,11 +165,10 @@ def etatPorte(ts,batiment,etat):
 
 # A tester
 def incendie(ts,batiment):
-    batiment = ts.IN(("incendie", batiment)[1])[0]
+    batiment = ts.IN(("incendie", batiment),[1])[0]
     for i in range(len(data["batiments"][batiment]["informations"]["badgeuses"])):
         data["batiments"][batiment]["informations"]["badgeuses"][i]["ouvert"] = True
     incendie(ts,batiment)
-
 def trouverBatiment(idBadgeuse, typeBadgeuse):
     for bat in data["batiments"]:
         for badgeuse in bat["informations"]["badgeuses"]:

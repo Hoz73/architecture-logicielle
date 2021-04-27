@@ -1,7 +1,7 @@
+from time import sleep
 class espaceDeTuples():
     def OUT(self, element):
         self.listeTuples.append(element)
-
     def IN(self, element, tab):
         resTemp = self.existe(element, tab)
         res = list()
@@ -38,6 +38,7 @@ class espaceDeTuples():
     def existe(self, template, tab):
         tuplePossible = []
         while (True):
+            sleep(0.2)
             for tupleI in self.listeTuples:
                 flag = True
                 if len(tupleI) == len(template):

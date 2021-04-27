@@ -13,7 +13,6 @@ from kivy.graphics import Color
 
 import time
 
-
 Config.set('graphics', 'width', '1280')
 Config.set('graphics', 'height', '720')
 Builder.load_file('./builder.kv')
@@ -74,25 +73,7 @@ class MainScreen(BoxLayout):
     def change_to_white(self):
         self.redraw(self.WHITE, self.WHITE, self.WHITE)
     
-
-
-
-                
-
-    
-class Lights(BoxLayout):
-
-    def __init__(self):
-        pass
-        
-
-    def on_change(self):
-        pass
-
-
 class app(App):
+
     def build(self):
         return MainScreen()
-
-if __name__ == '__main__':
-    app().run()
