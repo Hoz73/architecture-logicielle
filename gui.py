@@ -85,14 +85,9 @@ class MainScreen(BoxLayout):
     def print_logs(self):
         print("logs here")
 
+
 class app(App):
+
     def build(self):
         return MainScreen()
 
-def start():
-    app().run()
-
-if __name__ == '__main__':
-    t = Thread(target=start(), daemon=True)
-    t.start()
-    

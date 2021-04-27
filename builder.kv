@@ -79,7 +79,7 @@
                 text: "Batiments / Salles"
 
 
-            # Batiment 8A
+            # Batiment 4A
             RelativeLayout:
                 pos: 790, 208
                 size: 150, 120
@@ -99,7 +99,7 @@
                     text_size: self.size
                     halign: 'center'
                     valign: 'middle'
-                    text: "Entree"
+                    text: "Entree\nNord"
                     on_press: root.bat = 1
                 ToggleButton:
                     pos: 70,65
@@ -107,24 +107,24 @@
                     size_hint: None, None
                     group: "bat"
                     color: 0,0,0,1
-                    text: "Salle 1"
-                    on_press: root.bat = 2
+                    text: "4A-45"
+                    on_press: root.bat = 4
                 ToggleButton:
                     pos: 70,5
                     size: 75,50
                     size_hint: None, None
                     group: "bat"
                     color: 0,0,0,1
-                    text: "Salle 2"
-                    on_press: root.bat = 3
+                    text: "4A-44"
+                    on_press: root.bat = 6
                 Label:
                     pos: 60,-30
                     size: 15,15
                     size_hint: None, None
                     color: 0,0,0,1
-                    text: "Batiment 8A"
+                    text: "Batiment 4A"
 
-            # Batiment 8B
+            # Batiment 8A
             RelativeLayout:
                 pos: 750, 438
                 size: 215, 120
@@ -163,14 +163,14 @@
                     size_hint: None, None
                     group: "bat"
                     color: 0,0,0,1
-                    text: "Salle 1"
-                    on_press: root.bat = 6
+                    text: "8A-42"
+                    on_press: root.bat = 13
                 Label:
                     pos: 100,-30
                     size: 15,15
                     size_hint: None, None
                     color: 0,0,0,1
-                    text: "Batiment 8B"
+                    text: "Batiment 8A"
 
         BoxLayout:
             size_hint: 1, .1
