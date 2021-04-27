@@ -33,17 +33,46 @@
                 text: 'Carte 4'
                 on_press: root.card = 4
         FloatLayout:
+            id: floatlayout
             size_hint: 1, .8
-            canvas:
+            canvas.before:
                 Color:
                     rgba: .8,.8,.8,1
                 Rectangle:
                     pos: self.pos
                     size: self.size
+            
+            # Feu signalisation
+            canvas:
+                Color:
+                    rgba: .6,.6,.6,1
+                Rectangle: 
+                    pos: 102,208
+                    size: 100, 300
+
+                Color:
+                    rgba: root.WHITE
+                Ellipse:
+                    group: 'a'
+                    size: 80, 80
+                    pos: 112, 418
+                
+                Color:
+                    rgba: root.WHITE
+                Ellipse:
+                    group: 'a'
+                    size: 80, 80
+                    pos: 112, 320
+
+                #Color:
+                #    rgba: root.WHITE
+                Triangle:
+                    group: 'a'
+                    points: [112, 218, 152, 298, 192, 218]
 
             # Titre
             Label:
-                pos: 630,598
+                pos: 857,598
                 size: 20,20
                 size_hint: None, None
                 color: 0,0,0,1
@@ -52,8 +81,8 @@
 
             # Batiment 8A
             RelativeLayout:
-                pos: 150, 438
-                size: 300, 120
+                pos: 790, 208
+                size: 150, 120
                 size_hint: None, None
                 canvas:
                     Color:
@@ -70,62 +99,35 @@
                     text_size: self.size
                     halign: 'center'
                     valign: 'middle'
-                    text: "Entree\nOUEST"
+                    text: "Entree"
                     on_press: root.bat = 1
                 ToggleButton:
-                    pos: 265,35
-                    size: 70,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text_size: self.size
-                    halign: 'center'
-                    valign: 'middle'
-                    text: "Entree\nEST"
-                    on_press: root.bat = 2
-                ToggleButton:
-                    pos: 60,65
+                    pos: 70,65
                     size: 75,50
                     size_hint: None, None
                     group: "bat"
                     color: 0,0,0,1
                     text: "Salle 1"
-                    on_press: root.bat = 3
+                    on_press: root.bat = 4
                 ToggleButton:
-                    pos: 165,65
+                    pos: 70,5
                     size: 75,50
                     size_hint: None, None
                     group: "bat"
                     color: 0,0,0,1
                     text: "Salle 2"
-                    on_press: root.bat = 4
-                ToggleButton:
-                    pos: 60,5
-                    size: 75,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text: "Salle 3"
-                    on_press: root.bat = 5
-                ToggleButton:
-                    pos: 165,5
-                    size: 75,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text: "Salle 4"
                     on_press: root.bat = 6
                 Label:
-                    pos: 140,-30
-                    size: 20,20
+                    pos: 60,-30
+                    size: 15,15
                     size_hint: None, None
                     color: 0,0,0,1
                     text: "Batiment 8A"
 
             # Batiment 8B
             RelativeLayout:
-                pos: 830, 438
-                size: 300, 120
+                pos: 750, 438
+                size: 215, 120
                 size_hint: None, None
                 canvas:
                     Color:
@@ -145,7 +147,7 @@
                     text: "Entree\nOUEST"
                     on_press: root.bat = 11
                 ToggleButton:
-                    pos: 265,35
+                    pos: 180,35
                     size: 70,50
                     size_hint: None, None
                     group: "bat"
@@ -156,115 +158,19 @@
                     text: "Entree\nEST"
                     on_press: root.bat = 12
                 ToggleButton:
-                    pos: 60,65
+                    pos: 70,35
                     size: 75,50
                     size_hint: None, None
                     group: "bat"
                     color: 0,0,0,1
                     text: "Salle 1"
                     on_press: root.bat = 13
-                ToggleButton:
-                    pos: 165,65
-                    size: 75,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text: "Salle 2"
-                    on_press: root.bat = 14
-                ToggleButton:
-                    pos: 60,5
-                    size: 75,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text: "Salle 3"
-                    on_press: root.bat = 15
-                ToggleButton:
-                    pos: 165,5
-                    size: 75,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text: "Salle 4"
-                    on_press: root.bat = 16
                 Label:
-                    pos: 140,-30
-                    size: 20,20
+                    pos: 100,-30
+                    size: 15,15
                     size_hint: None, None
                     color: 0,0,0,1
                     text: "Batiment 8B"
-
-            # Batiment 8C
-            RelativeLayout:
-                pos: 490, 162
-                size: 300, 120
-                size_hint: None, None
-                canvas:
-                    Color:
-                        rgba: .6,.6,.6,1
-                    Rectangle:
-                        pos: 0,0
-                        size: self.size
-                ToggleButton:
-                    pos: -35,35
-                    size: 70,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text_size: self.size
-                    halign: 'center'
-                    valign: 'middle'
-                    text: "Entree\nOUEST"
-                    on_press: root.bat = 21
-                ToggleButton:
-                    pos: 265,35
-                    size: 70,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text_size: self.size
-                    halign: 'center'
-                    valign: 'middle'
-                    text: "Entree\nEST"
-                    on_press: root.bat = 22
-                ToggleButton:
-                    pos: 60,65
-                    size: 75,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text: "Salle 1"
-                    on_press: root.bat = 23
-                ToggleButton:
-                    pos: 165,65
-                    size: 75,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text: "Salle 2"
-                    on_press: root.bat = 24
-                ToggleButton:
-                    pos: 60,5
-                    size: 75,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text: "Salle 3"
-                    on_press: root.bat = 25
-                ToggleButton:
-                    pos: 165,5
-                    size: 75,50
-                    size_hint: None, None
-                    group: "bat"
-                    color: 0,0,0,1
-                    text: "Salle 4"
-                    on_press: root.bat = 26
-                Label:
-                    pos: 140,-30
-                    size: 20,20
-                    size_hint: None, None
-                    color: 0,0,0,1
-                    text: "Batiment 8C"
 
         BoxLayout:
             size_hint: 1, .1
