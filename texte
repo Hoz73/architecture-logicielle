@@ -1,0 +1,21 @@
+difficultés rencontrées :
+ * Modelio + java au début
+ * beaucoup de thread --> prends beaucoup de mémoire sur le cpu / gpu et est donc très lent
+ * Tests effectués sur un agent/thread a chauqe fois donc lenteur trouvé tard (236 threads en mm temps) (thread -> memoire partagee)
+ * imaginer l'interface
+ * Lier l'interface avec le backend 
+
+
+    Au debut de notre travail nous avons voulu faire le TP avec JAVA car l'outils Modelio nous permettait de créer un diagramme d'objet et des diagrammes de séquences
+    que nous pouvions directement exporter un code JAVA.
+    Cependant nous nous sommes rendu compte que JAVA n'était pas une bonne idée puisque, lui-même, consomme déjà beaucoup de mémoire pour éxecuter un programme.
+    De plus l'architecture créer par Modelio ne convenait pas au sujet et aux objectifs du TP  
+    Après avoir pris du recul nous avons décidé d'utiliser Python car c'est le langage le plus adapté pour faire une architecture à base de tuples
+
+    La seconde difficulté nous est apparus au moment d'assigner nos fonctions sur des threads. Nous avons commencer à assigner les threads fonctions par fonctions
+    et à les tester un par un pour vérifier qu'ils fonctionnait correctement indépendement les uns des autres. Lorsque toutes les fonctions avaient été vérifiés nous avons commencé
+    à faire tourner tous les threads en même temps, le programme avait un temps d'exécution beaucoup trop long pour pouvoir faire des tests de façon optimal. Il s'est avéré que
+    nous avions en réalité 236 threads qui fonctionnait les uns en mêmes temps que les autres. De plus ceux-ci utilisent une mémoire partagée, c'est principalement à cause de cela
+    que le programme était extrêmement long.
+
+    Ensuite nous avons eu des soucis lors de la création de l'inteface et avant tout pour l'imaginer. Il nous fallait une interface 

@@ -6,6 +6,7 @@
 \usepackage{adjustbox}
 \usepackage{hyperref}
 \usepackage{imakeidx}
+\usepackage{hyperref}
 
 \title{Compte rendu TP : Architecture logicielle}
 \date{29/05/21}
@@ -22,7 +23,7 @@
     \section{Sujet}
         Le principe du tp est de concevoir l'architecture d'un système de contrôle d'accès à un ensemble de bâtiments.
     
-        Un batiment possède un nom ainsi que des informations. Les informations sont :
+        Un bâtiment possède un nom ainsi que des informations. Les informations sont :
         \begin{itemize}
             \item la liste des portes du bâtiment
             \begin{itemize}
@@ -86,6 +87,104 @@
 
     \pagebreak
     \section{Architecture utilisée}
+
+    Nous sommes partis sur un architecture à base de tuple comme celle vue en cours, et pour cela, nous avons décidé de réaliser une classe dédié : \textit{espaceDeTuples}. Voici sa définition :
+    \begin{lstlisting}[language=Python]
+class espaceDeTuples():
+    def OUT(self, element):
+        self.listeTuples.append(element)
+
+    def IN(self, element, tab):
+        resTemp = self.existe(element, tab)
+        res = list()
+        for index in tab:
+            res.append(resTemp[index])
+        self.listeTuples.remove(resTemp)
+        return res
+
+    def RD(self, element, tab):
+        resTemp = self.existe(element, tab)
+        res = list()
+        for index in tab:
+            res.append(resTemp[index])
+        return res
+
+    def ADD(self, element, tab):
+        resTemp = self.existe(element, tab)
+        index = self.listeTuples.index(resTemp)
+        listTuple = list(self.listeTuples[index])
+        for i in tab:
+            listTuple[i] = element[i]
+        self.listeTuples[index] = tuple(listTuple)
+
+    def INUNBLOCKED(self, element, tab):
+        resTemp = self.existeNonBloquant(element, tab)
+        if resTemp is None:
+            return None
+        res = list()
+        for index in tab:
+            res.append(resTemp[index])
+        self.listeTuples.remove(resTemp)
+        return res
+
+    def existe(self, template, tab):
+        tuplePossible = []
+        while (True):
+            for tupleI in self.listeTuples:
+                flag = True
+                if len(tupleI) == len(template):
+                    for i in range(len(template)):
+                        if type(template[i]) != type(tupleI[i]):
+                            flag = False
+                    if flag:
+                        tuplePossible.append(tupleI)
+            for tupleI in tuplePossible:
+                allIndex = list(range(len(tupleI)))
+                for i in tab:
+                    for j in allIndex:
+                        if i == j:
+                            allIndex.remove(j)
+                flag = True
+                for i in allIndex:
+                    if template[i] != tupleI[i]:
+                        flag = False
+                if flag:
+                    return tupleI
+
+    def existeNonBloquant(self, template, tab):
+        tuplePossible = []
+        for tupleI in self.listeTuples:
+            flag = True
+            if len(tupleI) == len(template):
+                for i in range(len(template)):
+                    if type(template[i]) != type(tupleI[i]):
+                        flag = False
+                if flag:
+                    tuplePossible.append(tupleI)
+            for tupleI in tuplePossible:
+                allIndex = list(range(len(tupleI)))
+                for i in tab:
+                    for j in allIndex:
+                        if i == j:
+                            allIndex.remove(j)
+                flag = True
+                for i in allIndex:
+                    if template[i] != tupleI[i]:
+                        flag = False
+                if flag:
+                    return tupleI
+
+    def __init__(self):
+        self.listeTuples = list()
+
+    \end{lstlisting}
+    Cette classe implémente les différentes interactions dont notre programme avait besoin. 
+
+    \textbf{Ps : } Problème dans la fonction \textit{existe} qui a une boucle \verb|while True| et qui la cause principale des problèmes rencontrées. Voir \nameref{difficulty}.
+
+    \pagebreak
+    Nous avons décidé alors de commencer par l'agent qui permettait de scanner une carte, qui servira de \textit{core} aux restes des agents à l'aide du diagramme en séquence réalisé.
+
     \pagebreak
     \section{Choix technologiques}
     \pagebreak
@@ -94,6 +193,17 @@
     \section{Grand pas pour l'humanité}
     \pagebreak
     \section{Difficultés rencontrées}
+    \label{difficulty}
+    \par Au debut de notre travail nous avons voulu faire le TP avec JAVA car Modelio nous permettait de créer un diagramme d'objet et des diagrammes de séquences que nous pouvions directement exporter en code JAVA.
+    Cependant nous nous sommes rendu compte que JAVA n'était pas une bonne idée puisque, lui-même, consomme déjà beaucoup de mémoire pour éxecuter un programme.
+    De plus l'architecture créée par Modelio ne convenait pas au sujet et aux objectifs du TP. Après avoir pris du recul nous avons décidé d'utiliser Python car c'est un langage adapté pour faire une architecture à base de tuples.
+    \\
+    \par
+    La seconde difficulté qui nous est apparue est lors de l'assignation de nos fonctions sur des threads. Nous avons commencer à assigner les threads fonction par fonction et à les tester un par un pour vérifier qu'ils fonctionnaient correctement indépendement les uns des autres. Lorsque toutes les fonctions avaient été vérifiées nous avons commencé à faire tourner tous les threads en même temps. Mais, le programme avait un temps d'exécution beaucoup trop long pour pouvoir l'utiliser. Nous avons plus de \textbf{200} threads qui fonctionnaient les un en même temps que les autres. C'est pour cela, que nous avons minimisé le nombre de badgeuse, de bâtiment... lors de la démonstration.
+    \\
+    \par
+     Ensuite nous avons eu des soucis lors de la création de l'inteface et avant tout pour l'imaginer. Il nous fallait une interface qui puisse interagir avec l'espace de tuple en temps réel.
+
     \pagebreak
     
 \end{document}
