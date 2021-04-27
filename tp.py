@@ -278,11 +278,8 @@ class MainScreen(BoxLayout):
     def mettreFeu(self):
         global tsBatiment
         tsBatiment.OUT(("incendie",indexBatiment(trouverBatiment(self.idBadgeuse,self.estBatiment))))
-        for i in tsBatiment.listeTuples:
-            print(i)
 
     def listenGreen(self, tsBatiment):
-        print("ton pere suce des bites en enfer green")
 
         tsBatiment.IN(("turnOnLightGreen",0),[])
         self.change_to_green()
@@ -290,7 +287,6 @@ class MainScreen(BoxLayout):
         self.listenGreen()
     
     def listenRed(self, tsBatiment):
-        print("ton pere suce des bites en enfer red ")
 
         tsBatiment.IN(("turnOnLightRed",0),[])
         self.change_to_red()
@@ -298,9 +294,7 @@ class MainScreen(BoxLayout):
         self.listenRed()
 
     def listenFire(self, tsBatiment):
-        print("ton pere suce des bites en enfer fire")
         tsBatiment.IN(("turnOnLightFire",0),[])
-        print("ta mere suce des bites en enfer")
         self.change_to_fire()
 
 
