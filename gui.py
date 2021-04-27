@@ -25,6 +25,7 @@ class MainScreen(BoxLayout):
     card = 0
     bat = 0
     nb_person = 0
+    isset_incendie = False
 
     WHITE = [1,1,1,1]
     RED = [1,0,0,1]
@@ -69,7 +70,11 @@ class MainScreen(BoxLayout):
         self.redraw(self.WHITE, self.RED, self.WHITE)
 
     def change_to_fire(self):
-        self.redraw(self.WHITE, self.WHITE, self.FIRE)
+        self.isset_incendie = not(self.isset_incendie)
+        c = self.WHITE
+        if self.isset_incendie == True:
+            c = self.FIRE
+        self.redraw(self.WHITE, self.WHITE, c)
 
     def change_to_white(self):
         self.redraw(self.WHITE, self.WHITE, self.WHITE)
