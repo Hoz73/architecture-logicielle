@@ -217,15 +217,6 @@ def main():
         
 
 
-
-
-
-
-
-
-
-
-
 class MainScreen(BoxLayout):
     card = 0
     idBadgeuse = 0
@@ -242,13 +233,18 @@ class MainScreen(BoxLayout):
 
     def check_card(self):
         print("_________________________________")
-        print("card number : " + str(self.card))
-        print("bat door : " + str(self.bat))
-        print("Entrer / sortir : " + self.inout)
+        print("badg : " + str(self.vraiIdBadgeuse()))
+        print("bat  : " + str(self.estBatiment))
+        print("Entrer / sortir : " + str(self.entree))
+        print("cart ", self.card)
+        global tsBatiment
+        lecteurCarte(tsBatiment,self.vraiIdBadgeuse(),self.card)
+        for i in tsBatiment.listeTuples:
+            print(i)
     
     def add_person(self):
         global tsBatiment
-        tsBatiment.IN(("capteurPassage", self.vraiIdBadgeuse()))
+        tsBatiment.OUT(("capteurPassage", self.vraiIdBadgeuse()))
 
 
     def redraw(self, green, red, fire):
@@ -284,14 +280,16 @@ class MainScreen(BoxLayout):
         tsBatiment.IN(("turnOnLightGreen",0),[])
         self.change_to_green()
         tsBatiment.IN(("turnOffLightGreen",0),[])
-        self.listenGreen()
+        self.change_to_white()
+        self.listenGreen(tsBatiment)
     
     def listenRed(self, tsBatiment):
 
         tsBatiment.IN(("turnOnLightRed",0),[])
         self.change_to_red()
         tsBatiment.IN(("turnOffLightRed",0),[])
-        self.listenRed()
+        self.change_to_white()
+        self.listenRed(tsBatiment)
 
     def listenFire(self, tsBatiment):
         tsBatiment.IN(("turnOnLightFire",0),[])
@@ -302,7 +300,8 @@ class MainScreen(BoxLayout):
         self.redraw(self.WHITE, self.WHITE, self.WHITE)
 
     def print_logs(self):
-        print("logs here")
+        global tsPersonne
+        personnesPresentes(tsPersonne)
 
 
     def __init__(self):

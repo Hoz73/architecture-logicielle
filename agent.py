@@ -26,6 +26,7 @@ def verifCarte(tsBatiment, tsAutorisation, idBadgeuse):
     idCarte = tsBatiment.IN(("verifCarte", idBadgeuse, -1), [2])[0]
     res = tsAutorisation.RD(("autorisationCarte", idBadgeuse, idCarte, True), [3])[0]
     tsBatiment.OUT(("porteDebloquee", idBadgeuse, res))
+    verifCarte(tsBatiment, tsAutorisation, idBadgeuse)
 
 def scanCarte(ts, idBadgeuse, typeBadgeuse):
     res = ts.IN(("cartePosee", idBadgeuse, -1), [2])
@@ -53,8 +54,8 @@ def lumiereVerte(ts, idBadgeuse):
         sec -= 1
     etatColor = Color.OFF
     ts.OUT(("turnOffLightGreen",0))
-
     print(bcolors.FAIL + "Porte fermee" + bcolors.RESET)
+    lumiereVerte(ts, idBadgeuse)
 
 def lumiereRouge(ts, idBadgeuse):
     ts.IN(("lumiereRouge", idBadgeuse), [])
@@ -65,6 +66,7 @@ def lumiereRouge(ts, idBadgeuse):
     sleep(3)
     etatColor = Color.OFF
     ts.OUT(("turnOffLightRed",0))
+    lumiereRouge(ts, idBadgeuse)
 
 
 def detectionPassage(ts, tsPersonne, idBadgeuse):
@@ -98,7 +100,7 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
         ts.ADD(("nbPersonnesPassees", idBadgeuse, 0), [2])
         detectionPassage(ts, tsPersonne, idBadgeuse)
     elif nbPersonnesPassees == 1:
-        if (idBadgeuse % 2) == 0:
+        if (idBadgeuse % 2) != 0:
             print("badgeuse entree")
             msg = data["cartes"][str(idCarte)] + " est entre via la badgeuse " + str(idBadgeuse) 
             logAgent(msg)
