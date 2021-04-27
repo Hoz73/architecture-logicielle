@@ -100,7 +100,9 @@
                     halign: 'center'
                     valign: 'middle'
                     text: "Entree\nNord"
-                    on_press: root.bat = 1
+                    on_press: root.idBadgeuse = 21
+                    on_press: root.estBatiment = False
+
                 ToggleButton:
                     pos: 70,65
                     size: 75,50
@@ -108,7 +110,9 @@
                     group: "bat"
                     color: 0,0,0,1
                     text: "4A-45"
-                    on_press: root.bat = 4
+                    on_press: root.idBadgeuse = 23
+                    on_press: root.estBatiment = False
+
                 ToggleButton:
                     pos: 70,5
                     size: 75,50
@@ -116,7 +120,9 @@
                     group: "bat"
                     color: 0,0,0,1
                     text: "4A-44"
-                    on_press: root.bat = 6
+                    on_press: root.idBadgeuse = 21
+                    on_press: root.estBatiment = False
+
                 Label:
                     pos: 60,-30
                     size: 15,15
@@ -145,7 +151,9 @@
                     halign: 'center'
                     valign: 'middle'
                     text: "Entree\nOUEST"
-                    on_press: root.bat = 4
+                    on_press: root.idBadgeuse = 13
+                    on_press: root.estBatiment = True
+
                 ToggleButton:
                     pos: 180,35
                     size: 70,50
@@ -156,7 +164,9 @@
                     halign: 'center'
                     valign: 'middle'
                     text: "Entree\nEST"
-                    on_press: root.bat = 5
+                    on_press: root.idBadgeuse = 11
+                    on_press: root.estBatiment = True
+
                 ToggleButton:
                     pos: 70,35
                     size: 75,50
@@ -164,7 +174,8 @@
                     group: "bat"
                     color: 0,0,0,1
                     text: "8A-42"
-                    on_press: root.bat = 13
+                    on_press: root.idBadgeuse = 11
+                    on_press: root.estBatiment = False
                 Label:
                     pos: 100,-30
                     size: 15,15
@@ -181,12 +192,12 @@
                 group: "inout"
                 color: 1,1,1,1
                 text: "Entrer"
-                on_press: root.inout = "in"
+                on_press: root.entree = True
             ToggleButton:
                 group: "inout"
                 color: 1,1,1,1
                 text: "Sortir"
-                on_press: root.inout = "out"
+                on_press: root.entree = False
 
         BoxLayout:
             size_hint: 1, .1
@@ -201,10 +212,6 @@
                 color: 1,1,1,1
                 text: '+ Personne'
                 on_press: root.add_person()
-            Button:
-                color: 1,1,1,1
-                text: '- Personne'
-                on_press: root.remove_person()
             Button:
                 color: 1,1,1,1
                 text: 'Incendie'

@@ -13,90 +13,35 @@ from kivy.config import Config
 from kivy.graphics import Ellipse
 from kivy.graphics import Triangle
 from kivy.graphics import Color
-
 import time
-
-class MainScreen(BoxLayout):
-    card = 0
-    bat = 0
-    nb_person = 0
-
-    WHITE = [1,1,1,1]
-    RED = [1,0,0,1]
-    GREEN = [0,1,0,1]
-    FIRE = [1,0,0,1]
-
-    def check_card(self):
-        print("_________________________________")
-        print("card number : " + str(self.card))
-        print("bat 8A door : " + str(self.bat))
-    
-    def add_person(self):
-        self.nb_person += 1
-        print("nb person : " + str(self.nb_person))
-
-    def remove_person(self):
-        if self.nb_person > 0 :
-            self.nb_person -= 1
-            print("nb person : " + str(self.nb_person))
-        else:
-            print("nb person already at 0")
-
-    def redraw(self, green, red, fire):
-        c = self.ids.floatlayout.canvas
-        with c:
-            c.get_group('a').clear()
-            Color(green[0], green[1], green[2], green[3])
-            c.add(Ellipse(pos=(112, 418), size=(80, 80)))
-        
-            Color(red[0], red[1], red[2], red[3])
-            c.add(Ellipse(pos=(112, 320), size=(80, 80)))
-
-            Color(fire[0], fire[1], fire[2], fire[3])
-            c.add(Triangle(points=(112,218,152,298,192,218)))
-
-        
-
-    def change_to_green(self):
-        self.redraw(self.GREEN, self.WHITE, self.WHITE)
-
-    def change_to_red(self):
-        self.redraw(self.WHITE, self.RED, self.WHITE)
-
-    def change_to_fire(self):
-        self.redraw(self.WHITE, self.WHITE, self.FIRE)
-
-    def change_to_white(self):
-        self.redraw(self.WHITE, self.WHITE, self.WHITE)
-    
-class app(App):
-
-    def build(self):
-        Config.set('graphics', 'width', '1280')
-        Config.set('graphics', 'height', '720')
-        Builder.load_file('./builder.kv')
-        return MainScreen()
-
- ####################""
-
-
-
-
-
-
-
-
-
 from multiprocessing import Process, Value, Array
 from threading import Thread, Event
 from time import sleep
 import math
 import json
-
-
 from espaceDeTuples import espaceDeTuples
 from bcolors import bcolors
 from agent import *
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 delai = 15
@@ -247,6 +192,86 @@ def main():
 
     screen.join()
         
+
+
+
+
+
+
+
+
+
+
+
+class MainScreen(BoxLayout):
+    card = 0
+    idBadgeuse = 0
+    estBatiment = False
+    entree = True
+    
+
+    WHITE =     [1,1,1,1]
+    RED =       [1,0,0,1]
+    GREEN =     [0,1,0,1]
+    FIRE =      [1,0.5,0,1]
+
+    def vraiIdBadgeuse(self):
+        return self.idBadgeuse if self.entree else self.idBadgeuse + 1
+
+    def check_card(self):
+        print("_________________________________")
+        print("card number : " + str(self.card))
+        print("bat door : " + str(self.bat))
+        print("Entrer / sortir : " + self.inout)
+    
+    def add_person(self):
+        tsBatiment.IN(("capteurPassage", self.vraiIdBadgeuse()))
+
+
+    def redraw(self, green, red, fire):
+        c = self.ids.floatlayout.canvas
+        with c:
+            c.get_group('a').clear()
+            Color(0,1,0)
+            c.add(Ellipse(pos=(112, 418), size=(80, 80)))
+        
+            Color(0,1,0,1)
+            c.add(Ellipse(pos=(112, 320), size=(80, 80)))
+
+            Color(0,1,0,1)
+            c.add(Triangle(points=(112,218,152,298,192,218)))
+
+        
+
+    def change_to_green(self):
+        self.redraw(self.GREEN, self.WHITE, self.WHITE)
+
+    def change_to_red(self):
+        self.redraw(self.WHITE, self.RED, self.WHITE)
+
+    def change_to_fire(self):
+        #tsBatiment.OUT(("incendie", self.idBadgeuse / 10 - 1))
+        c = self.FIRE
+        self.redraw(self.WHITE, self.WHITE, c)
+
+    def change_to_white(self):
+        self.redraw(self.WHITE, self.WHITE, self.WHITE)
+
+    def print_logs(self):
+        print("logs here")
+
+
+class app(App):
+
+    def build(self):
+        Config.set('graphics', 'width', '1280')
+        Config.set('graphics', 'height', '720')
+        Builder.load_file('./builder.kv')
+        return MainScreen()
+
+
+
+
 
 if __name__ == '__main__':
     with open('config.json') as json_file:

@@ -169,6 +169,8 @@ def incendie(ts,batiment):
     for i in range(len(data["batiments"][batiment]["informations"]["badgeuses"])):
         data["batiments"][batiment]["informations"]["badgeuses"][i]["ouvert"] = True
     incendie(ts,batiment)
+
+    
 def trouverBatiment(idBadgeuse, typeBadgeuse):
     for bat in data["batiments"]:
         for badgeuse in bat["informations"]["badgeuses"]:
