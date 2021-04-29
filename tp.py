@@ -24,26 +24,6 @@ from bcolors import bcolors
 from agent import *
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 delai = 15
 
 tabAgent = list()
@@ -295,14 +275,12 @@ class MainScreen(BoxLayout):
         tsBatiment.IN(("turnOnLightFire",0),[])
         self.change_to_fire()
 
-
     def change_to_white(self):
         self.redraw(self.WHITE, self.WHITE, self.WHITE)
 
     def print_logs(self):
         global tsPersonne
         personnesPresentes(tsPersonne)
-
 
     def __init__(self):
         super().__init__()
@@ -311,8 +289,6 @@ class MainScreen(BoxLayout):
         
 
 class app(App):
-
-
 
     def build(self):
         Config.set('graphics', 'width', '1280')
