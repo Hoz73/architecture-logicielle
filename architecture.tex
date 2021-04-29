@@ -65,27 +65,33 @@
 
         \par En cas d'un incendie, toutes les portes sont débloquées et on inscrit dans un fichier toutes les personnes dans les bâtiments.
         \pagebreak
+
     \section{Prémice}
-    Tout d'abord, nous avons analysé le sujet puis nos avons fait un diagramme de classe et un prototype d'un diagramme de séquence. Nous nous en sommes servis de base que nous avons au fur-à-mesure modifier.
+    Tout d'abord, nous avons analysé le sujet puis nos avons fait un diagramme de classe et un prototype d'un diagramme de séquence. Ceux-ci ont servi de base et ont été modifiés au fur et à mersure.
 
     \begin{figure}[h]
         \begin{subfigure}{1.0\textwidth}
-            \includegraphics[width=1\linewidth, height=4cm]{image/classe.png}
+            \includegraphics[width=1.2\linewidth, height=8cm]{image/classe.png}
              \caption{Diagramme de classe}
              \label{fig:classe}
         \end{subfigure}
-        \newline
-        \newline
-        \newline
 
-        \begin{subfigure}{1.0\textwidth}
-            \includegraphics[width=1\linewidth, height=4cm]{image/sequence.png}   
-            \caption{Diagramme en séquence}
-            \label{fig:sequence}
-        \end{subfigure}
     \end{figure}
 
-    \pagebreak
+
+    \begin{figure}[h]
+        \begin{subfigure}{1.0\textwidth}
+
+        \includegraphics[width=1\linewidth, height=12cm]{image/sequence.png}   
+        \caption{Diagramme en séquence}
+        \label{fig:sequence}
+        \end{subfigure}
+
+    \end{figure}
+
+    \clearpage
+    
+    
     \section{Architecture utilisée}
 
     Nous sommes partis sur un architecture à base de tuple comme celle vue en cours, et pour cela, nous avons décidé de réaliser une classe dédié : \textit{espaceDeTuples}. Voici sa définition :
@@ -180,17 +186,74 @@ class espaceDeTuples():
     \end{lstlisting}
     Cette classe implémente les différentes interactions dont notre programme avait besoin. 
 
-    \textbf{Ps : } Problème dans la fonction \textit{existe} qui a une boucle \verb|while True| et qui la cause principale des problèmes rencontrées. Voir \nameref{difficulty}.
+    \textbf{Ps : } Problème dans la fonction \textit{existe} qui a une boucle \verb|while True| et qui est la cause principale des problèmes rencontrés. Voir \nameref{difficulty}.
 
-    \pagebreak
-    Nous avons décidé alors de commencer par l'agent qui permettait de scanner une carte, qui servira de \textit{core} aux restes des agents à l'aide du diagramme en séquence réalisé.
+    
+    \par Nous avons choisi seulement cette implémentation car elle remplit à elle seule les fonctionnements nécessaires au TP.   
 
     \pagebreak
     \section{Choix technologiques}
+    Nous avons décidé d'utiliser python car celui-ci :
+    \begin{itemize}
+        \item Possède déjà une structure de tuples que nous avons utilisé dans la partie précédente
+        \item Threading simple à implémenter
+        \item Interface graphique simple à implémenter (Kivy)
+        \item Pas trop lourd et rapide d'éxecution
+    \end{itemize} 
+
+    Dans notre TP, les espaces de tuples sont représentés par une \textbf{variable globale}. Dans le système final, cet espace serait représenté par une base de données. Chaque \textbf{agent} est représenté par un \textbf{Thread} dont la mémoire est partagée avec tous les autres Threads qui représentent les autres agents.
+
+    \vspace{5mm} 
+
+    La classe badgeuse est représenté par :
+
+    \begin{itemize}
+        \item lecteurCarte : dépose un tuple dans l'espace de tuple
+        \item verifCarte : autorise la personne à entrer dans le bâtiment
+        \item scanCarte : lance la détection et l'allumage des leds
+        \item lumiereVerte : s'allume lorsque la personne est autorisée
+        \item lumiereRouge : s'allume lorsque la personne n'est pas autorisée
+        \item detectionPassage : le capteur dépose dans la base de tuple un tuple lorsque qu'il détecte lorsqu'une personne passe
+        \item etatPorte : permet d'ouvrir une porte et de la fermer. En cas d'incendie, ferme toutes les portes.
+    \end{itemize}
+
+    Nous avons aussi des agents pour les fonctions secondaires : 
+    \begin{itemize}
+        \item declencheAlarme : Souleve l'alerte si il y a plus d'une personne qui passe
+        \item incendie : le capteur d'incendie dépose un tuple qui est détecté par cet agent va déclencher une alarme.
+    
+    \end{itemize}
+        
     \pagebreak
     \section{Petit pas pour l'homme}
+    Nous avons décidé alors de commencer par l'agent qui permettait de scanner une carte, qui servira de \textit{core} aux restes des agents. Tout d'abord, nous avons fait un exemple en langage algorithmique :
+    \begin{figure}[h]
+        \begin{subfigure}{1.0\textwidth}
+            \includegraphics[width=1.2\linewidth, height=8cm]{image/tableau.jpg}
+             \caption{1er jet}
+             \label{fig:tableau}
+        \end{subfigure}
+    \end{figure}
+
+    Assez difficile au début, mais petit à petit comme l'oiseau qui fait son nid, cet agent nous a bien servi pour le reste.
+
     \pagebreak
     \section{Grand pas pour l'humanité}
+    Nous avons ensuite réalisé les autres agents. Nous les avons testé un par un, puis ensemble. Nous avons dû créer des agents spécialement pour l'interface, pour avoir un rendu direct avec l'espace de tuple.
+
+    \begin{figure}[h]
+        \begin{subfigure}{1.0\textwidth}
+            \includegraphics[width=1.0\linewidth, height=6cm]{image/interface-1.png}
+             \caption{Interface grapique avec Kivy}
+             \label{fig:interface1}
+        \end{subfigure}
+        \begin{subfigure}{1.0\textwidth}
+            \includegraphics[width=1.0\linewidth, height=6cm]{image/interface-2.png}
+             \caption{Interface avec la console qui affiche le temps}
+             \label{fig:tableau}
+        \end{subfigure}
+    \end{figure}
+    
     \pagebreak
     \section{Difficultés rencontrées}
     \label{difficulty}
@@ -199,11 +262,12 @@ class espaceDeTuples():
     De plus l'architecture créée par Modelio ne convenait pas au sujet et aux objectifs du TP. Après avoir pris du recul nous avons décidé d'utiliser Python car c'est un langage adapté pour faire une architecture à base de tuples.
     \\
     \par
-    La seconde difficulté qui nous est apparue est lors de l'assignation de nos fonctions sur des threads. Nous avons commencer à assigner les threads fonction par fonction et à les tester un par un pour vérifier qu'ils fonctionnaient correctement indépendement les uns des autres. Lorsque toutes les fonctions avaient été vérifiées nous avons commencé à faire tourner tous les threads en même temps. Mais, le programme avait un temps d'exécution beaucoup trop long pour pouvoir l'utiliser. Nous avons plus de \textbf{200} threads qui fonctionnaient les un en même temps que les autres. C'est pour cela, que nous avons minimisé le nombre de badgeuse, de bâtiment... lors de la démonstration.
+    La seconde difficulté qui nous est apparue est lors de l'assignation de nos fonctions sur des threads. Nous avons commencer à assigner les threads fonction par fonction et à les tester un par un pour vérifier qu'ils fonctionnaient correctement indépendement les uns des autres. Lorsque toutes les fonctions avaient été vérifiées nous avons commencé à faire tourner tous les threads en même temps. Mais, le programme avait un temps d'exécution beaucoup trop long pour pouvoir l'utiliser. Nous avions plus de \textbf{200} threads qui fonctionnaient les un en même temps que les autres. C'est pour cela, que nous avons minimisé le nombre de badgeuse, de bâtiment... lors de la démonstration.
     \\
     \par
-     Ensuite nous avons eu des soucis lors de la création de l'inteface et avant tout pour l'imaginer. Il nous fallait une interface qui puisse interagir avec l'espace de tuple en temps réel.
+     Ensuite nous avons eu des soucis lors de la création de l'inteface et avant tout pour l'imaginer. Il nous fallait une interface qui puisse interagir avec l'espace de tuple en temps réel et de façon intuitive.
 
     \pagebreak
-    
+    \section{Ce que nous avons appris}
+    Pour conclure, trop de thread tue les threads. Les threads ont leur limite, il aurait été peut être plus judiceux de faire des processus, mais nous aurions dû changer la représentation de notre espace de tuple avec une base de données. Lier le backend avec l'interface tout en utilisant les tuples et composant connecteur pour les boutons.
 \end{document}

@@ -160,7 +160,6 @@ def logAgent(msg):
     f.close()
 
     
-# A tester
 def etatPorte(ts,batiment,etat):
     res = ts.IN(("actionPorte", batiment, -1, False),[1,2,3])
     for i in range(len(data["batiments"])) :
@@ -172,12 +171,12 @@ def etatPorte(ts,batiment,etat):
                     etat = not etat
     etatPorte(ts,batiment, etat)
 
-# A tester
 def incendie(ts,batiment, ):
     batiment = ts.IN(("incendie", batiment),[1])[0]
     for i in range(len(data["batiments"][batiment]["informations"]["badgeuses"])):
         data["batiments"][batiment]["informations"]["badgeuses"][i]["ouvert"] = True
     ts.OUT(("turnOnLightFire",0))
+    print(data)
 
 
 def trouverBatiment(idBadgeuse, typeBadgeuse):
