@@ -212,15 +212,8 @@ class MainScreen(BoxLayout):
         return self.idBadgeuse if self.entree else self.idBadgeuse + 1
 
     def check_card(self):
-        print("_________________________________")
-        print("badg : " + str(self.vraiIdBadgeuse()))
-        print("bat  : " + str(self.estBatiment))
-        print("Entrer / sortir : " + str(self.entree))
-        print("cart ", self.card)
         global tsBatiment
         lecteurCarte(tsBatiment,self.vraiIdBadgeuse(),self.card)
-        for i in tsBatiment.listeTuples:
-            print(i)
     
     def add_person(self):
         global tsBatiment

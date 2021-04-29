@@ -80,9 +80,6 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
     sec = delai
     nbPersonne = 0
     while (sec > 0):
-        if sec == 5:
-            ts.OUT(("capteurPassage", idBadgeuse))
-            print("passage")
         sleep(1)
         passage = ts.INUNBLOCKED(("capteurPassage", idBadgeuse), [])
         if  passage is not None:
@@ -92,8 +89,6 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
     ts.OUT(("actionPorte", batiment, idBadgeuse, resType))
     nbPersonnesPassees = ts.RD(("nbPersonnesPassees", idBadgeuse, -1), [2])[0]
     if nbPersonnesPassees > 1:
-        print("if")
-        print(nbPersonnesPassees)
         msg = data["cartes"][str(idCarte)] + " a declenche l'alarme a la badgeuse " + str(idBadgeuse)
         logAgent(msg)
         ts.OUT(("declencheAlarme", idBadgeuse, typeBadgeuse))
@@ -101,22 +96,16 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
         detectionPassage(ts, tsPersonne, idBadgeuse)
     elif nbPersonnesPassees == 1:
         if (idBadgeuse % 2) != 0:
-            print("badgeuse entree")
             msg = data["cartes"][str(idCarte)] + " est entre via la badgeuse " + str(idBadgeuse) 
             logAgent(msg)
             tsPersonne.OUT(("personnePresente", idCarte, idBadgeuse, typeBadgeuse))
         else:
-            print("badgeuse sortie")
             msg = data["cartes"][str(idCarte)] + " est sortie via la badgeuse " + str(idBadgeuse)
             logAgent(msg)
             tsPersonne.IN(("personnePresente", idCarte, idBadgeuse, typeBadgeuse),[])
-        print("elif")
-        print(nbPersonnesPassees)
         ts.ADD(("nbPersonnesPassees", idBadgeuse, 0), [2])
         detectionPassage(ts, tsPersonne, idBadgeuse)
     else:
-        print("else")
-        print(nbPersonnesPassees)
         msg = data["cartes"][str(idCarte)] + " a active la badgeuse " + str(idBadgeuse) + " mais personne n'est entree"
         logAgent(msg)
         ts.ADD(("nbPersonnesPassees", idBadgeuse, 0), [2])
@@ -167,7 +156,6 @@ def etatPorte(ts,batiment,etat):
             for j in range(len((data["batiments"][i]["informations"]["badgeuses"]))):
                 if (data["batiments"][i]["informations"]["badgeuses"][j]["entree"] == res[1] or data["batiments"][i]["informations"]["badgeuses"][j]["sortie"] == res[1]) and data["batiments"][i]["informations"]["badgeuses"][j]["batiment"] == res[2]:
                     data["batiments"][i]["informations"]["badgeuses"][j]["ouvert"] =  etat
-                    print("etat actuelle :", etat)
                     etat = not etat
     etatPorte(ts,batiment, etat)
 
