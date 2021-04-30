@@ -162,7 +162,7 @@ def personnesPresentes(tsPersonne):
         res.append(personne[1])
         res.append(personne[2])
         res.append(personne[3])
-        f.write(str(i) + " -  nom : " + str(data["cartes"][str(res[0])] ) +", id badgeuse : " + str(res[1]) + ", type badgeuse : " + str(res[2]))
+        f.write(str(i) + " -  nom : " + str(data["cartes"][str(res[0])] ) +", id badgeuse : " + str(res[1]) + ", type badgeuse : " + str(res[2]) + "\n")
         i += 1
     f.close()
 

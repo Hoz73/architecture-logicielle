@@ -33,7 +33,7 @@ scanCarte(idBadgeuse,typeBadgeuse) =
 
 lecteurCarte(idBadgeuse, idCarte) = 
     out(<cartePosee, string, idBadgeuse, int, idCarte, int>).
-    lecteurCarte(idBadgeuse)
+    lecteurCarte(idBadgeuse, idCarte)
 
 ***************************************
 
@@ -48,13 +48,13 @@ verifCarte(idBadgeuse) =
 lumiereVerte(idBadgeuse) = 
     in(<|lumiereVerte, string, idBadgeuse, int|>).
     lumiereVerte(idBadgeuse)
-    //déclancher la lumière verte
+    //déclencher la lumière verte
 
 ****************************************
 lumiereRouge(idBadgeuse) = 
     in(<|lumiereRouge, string, idBadgeuse, int|>).
     lumiereRouge(idBadgeuse)
-    //déclancher la lumière rouge
+    //déclencher la lumière rouge
 
 ****************************************
 
@@ -69,13 +69,13 @@ detectionPassage(idBadgeuse) =
         +
         [detection == 1]
             (
-                [idBadgeuse % 2 == 0]
+                [idBadgeuse % 2 == 1]
                 (
                     out(personnePresente, <idCarte, int, idBadgeuse, int, typeBadgeuse, string>)
                     detectionPassage(idBadgeuse)
                 )
                 +
-                [idBadgeuse % 2 == 1]
+                [idBadgeuse % 2 == 0]
                 (
                     in(personnePresente, <|idCarte, int, idBadgeuse, int, typeBadgeuse, string|>)
                     detectionPassage(idBadgeuse)
@@ -87,7 +87,7 @@ detectionPassage(idBadgeuse) =
     )
 
 
-******************************************declancheAlarme(idBadgeuse, typeBadgeuse) = 
+******************************************declencheAlarme(idBadgeuse, typeBadgeuse) = 
     in(<|declencheAlarme, string, idBadgeuse, int|>)
     // code alarme
 
@@ -97,4 +97,3 @@ detectionPassage(idBadgeuse) =
 
 
 
-a

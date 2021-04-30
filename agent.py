@@ -102,7 +102,7 @@ def detectionPassage(ts, tsPersonne, idBadgeuse):
         else:
             msg = data["cartes"][str(idCarte)] + " est sortie via la badgeuse " + str(idBadgeuse)
             logAgent(msg)
-            tsPersonne.IN(("personnePresente", idCarte, idBadgeuse, typeBadgeuse),[])
+            tsPersonne.IN(("personnePresente", idCarte, idBadgeuse - 1, typeBadgeuse),[])
         ts.ADD(("nbPersonnesPassees", idBadgeuse, 0), [2])
         detectionPassage(ts, tsPersonne, idBadgeuse)
     else:
